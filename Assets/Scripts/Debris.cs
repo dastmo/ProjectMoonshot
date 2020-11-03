@@ -52,13 +52,6 @@ public class Debris : MonoBehaviour
         {
             BreakDown();
         }
-
-        PlayerControls playerControls = collision.gameObject.GetComponent<PlayerControls>();
-
-        if (playerControls)
-        {
-            Debug.Log(collision.relativeVelocity);
-        }
     }
 
     public void BreakDown()

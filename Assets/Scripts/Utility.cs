@@ -24,4 +24,12 @@ public class Utility : MonoBehaviour
         Vector3 mousePos = Input.mousePosition;
         return Camera.main.ScreenToWorldPoint(mousePos);
     }
+
+    public static float GetAngle(Vector2 vectorA, Vector2 vectorB)
+    {
+        Vector2 diff = vectorB - vectorA;
+        diff.Normalize();
+        float angle = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        return angle;
+    }
 }
