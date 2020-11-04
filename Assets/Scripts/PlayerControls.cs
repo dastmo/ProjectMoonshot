@@ -34,7 +34,7 @@ public class PlayerControls : MonoBehaviour
         botController.RegisterBot(this);
     }
 
-    protected void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         Vector2 rotationVector = RotateAroundEarth();
         Vector2 distanceVector = ControlDistanceFromEarth();
@@ -85,8 +85,6 @@ public class PlayerControls : MonoBehaviour
         Vector2 velocityVector = (vectorB - (Vector2)transform.position).normalized;
 
         if (currentThrottle > 0f) velocityVector *= -1;
-
-        //rb.velocity = velocityVector * currentThrottle;
 
         return velocityVector;
     }

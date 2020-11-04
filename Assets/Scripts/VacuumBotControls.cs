@@ -15,7 +15,7 @@ public class VacuumBotControls : PlayerControls
     private bool isSucking = false;
     private bool isBlowing = false;
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
         base.FixedUpdate();
 
@@ -68,14 +68,7 @@ public class VacuumBotControls : PlayerControls
     private void ControlBagSize()
     {
         float scale = currentBagMass / maximumBagCapacity;
-
-        if (scale < 0.1f)
-        {
-            bagTransform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-        }
-        else
-        {
-            bagTransform.localScale = new Vector3(scale, scale, scale);
-        }
+        if (scale < 0.25f) scale = 0.25f;
+        bagTransform.localScale = new Vector3(scale, scale, scale);
     }
 }
