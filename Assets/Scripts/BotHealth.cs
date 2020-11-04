@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,11 @@ public class BotHealth : MonoBehaviour
     [SerializeField] private float startingHealth = 100f;
     [SerializeField] private Collider2D bodyCollider;
 
+    private bool canTakeDamage = true;
+
     private PlayerControls playerControls;
+
+    public static Action<float, float> HealthChanged;
 
     public float CurrentHealth
     {
@@ -28,7 +33,15 @@ public class BotHealth : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        TakeDamage(collision);
+        if (collision.relativeVelocity.magnitude > 5f && canTakeDamage)
+        {
+            TakeDamage(collision);
+        }
+    }
+
+    public void BotSelected()
+    {
+        HealthChanged?.Invoke(CurrentHealth, startingHealth);
     }
 
     private void TakeDamage(Collision2D collision)
@@ -40,7 +53,17 @@ public class BotHealth : MonoBehaviour
         if (debris)
         {
             damage += collision.relativeVelocity.magnitude;
-            Debug.Log("Current Health: " + CurrentHealth);
         }
+
+        HealthChanged?.Invoke(CurrentHealth, startingHealth);
+
+        StartCoroutine(DamageCooldown());
+    }
+
+    private IEnumerator DamageCooldown()
+    {
+        canTakeDamage = false;
+        yield return new WaitForSeconds(3f);
+        canTakeDamage = true;
     }
 }

@@ -68,6 +68,7 @@ public class BotController : MonoBehaviour
         GameObject newBot = Instantiate(prefabToUse, new Vector3(0f, 40f, 0f), Quaternion.identity);
         newBot.GetComponent<PlayerControls>().IsEnabled = true;
         GameController.CenterCameraOnTarget(newBot.transform);
+        GameController.OnBotSelect(newBot.gameObject);
     }
 
     public void SelectBot(BotType botType)
@@ -84,6 +85,7 @@ public class BotController : MonoBehaviour
             {
                 bot.IsEnabled = true;
                 GameController.CenterCameraOnTarget(bot.transform);
+                GameController.OnBotSelect(bot.gameObject);
             }
         }
     }

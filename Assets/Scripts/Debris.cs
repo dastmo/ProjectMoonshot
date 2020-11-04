@@ -46,9 +46,12 @@ public class Debris : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        float impactForce = collision.relativeVelocity.magnitude;
+        Debug.Log(impactForce);
+
         Debris debris = collision.gameObject.GetComponent<Debris>();
 
-        if (debris)
+        if (debris && impactForce > 5f)
         {
             BreakDown();
         }

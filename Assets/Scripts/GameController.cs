@@ -69,9 +69,10 @@ public class GameController : MonoBehaviour
         return false;
     }
 
-    private void OnBotSelect(GameObject botSelected)
+    public static void OnBotSelect(GameObject botSelected)
     {
-        CurrentBotHealth = botSelected.GetComponent<BotHealth>();
+        Instance.CurrentBotHealth = botSelected.GetComponent<BotHealth>();
+        Instance.CurrentBotHealth.BotSelected();
     }
 
     public static void CenterCameraOnTarget(Transform newCameraTarget)
