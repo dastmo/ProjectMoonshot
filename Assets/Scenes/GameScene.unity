@@ -290,6 +290,7 @@ GameObject:
   - component: {fileID: 345287649}
   - component: {fileID: 345287648}
   - component: {fileID: 345287647}
+  - component: {fileID: 345287651}
   m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
@@ -377,6 +378,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &345287651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345287646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31d2225fb1e58a14aaf7dbde878df864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthSliderFill: {fileID: 1642917312}
 --- !u!1001 &428956354
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1303,8 +1317,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   broomBotPrefab: {fileID: 2643360275971315939, guid: 27d735beb2114b54183af47521e7f2b3, type: 3}
-  vacuumBotPrefab: {fileID: 2643360275971315939, guid: 8f047be8a94e3b241ada3dd2d38cd030, type: 3}
-  towBotPrefab: {fileID: 0}
+  vacuumBotPrefab: {fileID: 2643360275971315939, guid: 448d8f0103c8bf7499ab961a25b465d0, type: 3}
+  towBotPrefab: {fileID: 2643360275971315939, guid: 8f047be8a94e3b241ada3dd2d38cd030, type: 3}
   breakerBotPrefab: {fileID: 0}
 --- !u!1 &1594350019
 GameObject:

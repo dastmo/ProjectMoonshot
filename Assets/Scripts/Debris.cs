@@ -7,18 +7,17 @@ public class Debris : MonoBehaviour
     public float maxSize { get; set; } = 50f;
     public float minSize { get; set; } = 10f;
 
-    private Vector2 initialVelocity;
-
     private Rigidbody2D rb;
 
     private float size;
+
+    public float Size { get => size; }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         SetInitialSize();
-        initialVelocity = SetInitialVelocity();
-        rb.velocity = initialVelocity;
+        rb.velocity = SetInitialVelocity();
 
         GameController.TotalDebrisCount += 1;
         GameController.TotalDebrisMass += rb.mass;
@@ -47,7 +46,6 @@ public class Debris : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         float impactForce = collision.relativeVelocity.magnitude;
-        Debug.Log(impactForce);
 
         Debris debris = collision.gameObject.GetComponent<Debris>();
 

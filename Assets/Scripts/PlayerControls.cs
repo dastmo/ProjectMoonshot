@@ -34,16 +34,18 @@ public class PlayerControls : MonoBehaviour
         botController.RegisterBot(this);
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
-        RotateAroundEarth();
-        ControlDistanceFromEarth();
+        Vector2 rotationVector = RotateAroundEarth();
+        Vector2 distanceVector = ControlDistanceFromEarth();
         LookAtMouse();
+
+        rb.velocity = (rotationVector.normalized * currentThrottle) + (distanceVector.normalized * throttleForce);
     }
 
-    private void RotateAroundEarth()
+    private Vector2 RotateAroundEarth()
     {
-        if (!IsEnabled) return;
+        if (!IsEnabled) return Vector2.zero;
 
         if (Input.GetKey(KeyCode.A))
         {
@@ -62,11 +64,15 @@ public class PlayerControls : MonoBehaviour
 
         if (currentThrottle != 0)
         {
-            ControlVelocityAlongArc(currentThrottle / 90f);
+            return ControlVelocityAlongArc(currentThrottle / 90f);
+        }
+        else
+        {
+            return Vector2.zero;
         }
     }
 
-    private void ControlVelocityAlongArc(float angle)
+    private Vector2 ControlVelocityAlongArc(float angle)
     {
         float radius = Vector2.Distance(transform.position, Vector2.zero);
         float circ = 2 * Mathf.PI * radius;
@@ -80,7 +86,9 @@ public class PlayerControls : MonoBehaviour
 
         if (currentThrottle > 0f) velocityVector *= -1;
 
-        rb.velocity = velocityVector * currentThrottle;
+        //rb.velocity = velocityVector * currentThrottle;
+
+        return velocityVector;
     }
 
     private Vector2 RotateByRadians(Vector2 vectorA, float angle)
@@ -95,26 +103,28 @@ public class PlayerControls : MonoBehaviour
         return vectorB;
     }
 
-    private void ControlDistanceFromEarth()
+    private Vector2 ControlDistanceFromEarth()
     {
-        if (!IsEnabled) return;
+        if (!IsEnabled) return Vector2.zero;
 
-        Vector3 delta = Vector3.zero;
+        Vector3 velocityVector = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W))
         {
-            delta = (transform.position - Vector3.zero).normalized * throttleForce * Time.deltaTime;
+            velocityVector = (transform.position - Vector3.zero).normalized * throttleForce * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            delta = (Vector3.zero - transform.position).normalized * throttleForce * Time.deltaTime;
+            velocityVector = (Vector3.zero - transform.position).normalized * throttleForce * Time.deltaTime;
         }
 
-        if (Vector3.Distance(transform.position + delta, Vector3.zero) < GameController.MaxHeight &&
-            Vector3.Distance(transform.position + delta, Vector3.zero) > GameController.MinHeight)
+        if (Vector3.Distance(transform.position + velocityVector, Vector3.zero) < GameController.MaxHeight &&
+            Vector3.Distance(transform.position + velocityVector, Vector3.zero) > GameController.MinHeight)
         {
-            transform.position += delta;
+            return velocityVector.normalized;
         }
+
+        return Vector2.zero;
     }
 
     private void LookAtMouse()
