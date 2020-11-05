@@ -41,7 +41,7 @@ public class PlayerControls : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         botController.RegisterBot(this);
     }
