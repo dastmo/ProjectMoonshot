@@ -27,6 +27,8 @@ public class Debris : MonoBehaviour
 
         GameController.TotalDebrisCount += 1;
         GameController.TotalDebrisMass += rb.mass;
+
+        CreateFissures();
     }
 
     private void FixedUpdate()
@@ -50,6 +52,21 @@ public class Debris : MonoBehaviour
         if (debris && impactForce > 5f)
         {
             BreakDown();
+        }
+    }
+
+    private void CreateFissures()
+    {
+        if (size < 10f) return;
+
+        int numberOfFissures = Random.Range(1, 5);
+
+        for (int i = 0; i < numberOfFissures; i++)
+        {
+            Vector2 fissureDir = Utility.RandomVector2(-1f, 1f).normalized;
+            GameObject newFissure = Instantiate(GameController.FissurePrefab, transform);
+            newFissure.transform.localPosition = fissureDir * 0.1f; // Magic number here. Link to collider radius.
+            Utility.LookAt2d(newFissure.transform, (Vector2) transform.position);
         }
     }
 

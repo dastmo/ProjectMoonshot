@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     [SerializeField] private GameObject debrisPrefab;
+    [SerializeField] private GameObject fissurePrefab;
     [SerializeField] private CircleCollider2D repulsorCollider;
     private CircularEdge container;
     private float playAreaRadius;
@@ -31,6 +32,11 @@ public class GameController : MonoBehaviour
     {
         get { return Instance.totalDebrisNumber; }
         set { Instance.totalDebrisNumber = value; }
+    }
+
+    public static GameObject FissurePrefab
+    {
+        get => Instance.fissurePrefab;
     }
 
     public BotHealth CurrentBotHealth { get; set; }

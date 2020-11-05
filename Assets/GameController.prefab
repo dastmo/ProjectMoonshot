@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debrisPrefab: {fileID: 5392979345004320348, guid: 361586700eacd164d8626b76d1781f31, type: 3}
-  playAreaRadius: 5
+  fissurePrefab: {fileID: 751427190822639633, guid: 742ce55c21ecabc49ad5e6c62edf3348, type: 3}
+  repulsorCollider: {fileID: 0}
