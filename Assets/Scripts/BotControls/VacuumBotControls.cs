@@ -8,6 +8,7 @@ public class VacuumBotControls : PlayerControls
     [SerializeField] private Transform bagTransform;
     [SerializeField] private Collider2D vacuumAttachmentCollider;
     [SerializeField] private AreaEffector2D vacuumEffector;
+    [SerializeField] private TrailRenderer[] trailRenderers;
 
     private float currentBagMass;
     private List<float> individualDebrisWeight = new List<float>();
@@ -16,6 +17,17 @@ public class VacuumBotControls : PlayerControls
     private bool isBlowing = false;
 
     private float debrisSpitCooldown = 0.5f;
+
+    private bool _isEnabled = true;
+    public override bool IsEnabled
+    {
+        get => _isEnabled;
+        set
+        {
+            _isEnabled = value;
+            ToggleTrails(value);
+        }
+    }
 
     protected override void FixedUpdate()
     {
@@ -67,6 +79,8 @@ public class VacuumBotControls : PlayerControls
         individualDebrisWeight.Add(debris.Size);
         Destroy(debris.gameObject);
         ControlBagSize();
+
+        if (currentBagMass > maximumBagCapacity) BagOverflow();
     }
 
     private void SpitOutDebris()
@@ -92,5 +106,32 @@ public class VacuumBotControls : PlayerControls
         float scale = currentBagMass / maximumBagCapacity;
         if (scale < 0.25f) scale = 0.25f;
         bagTransform.localScale = new Vector3(scale, scale, scale);
+    }
+
+    private void BagOverflow()
+    {
+        for (int i = 0; i < individualDebrisWeight.Count; i++)
+        {
+            GameObject newDebris = GameController.SpawnDebris(transform.position + (-transform.right * 3f));
+            Debris debrisComponent = newDebris.GetComponent<Debris>();
+            debrisComponent.AutoSetValues = false;
+            debrisComponent.SetSize(individualDebrisWeight[i]);
+
+            
+            debrisComponent.ApplyForce((Vector2)(-transform.right * 10f) + Utility.RandomVector2(-2f, 2f));
+            currentBagMass -= individualDebrisWeight[i];
+        }
+
+        individualDebrisWeight.Clear();
+
+        ControlBagSize();
+    }
+
+    private void ToggleTrails(bool isOn)
+    {
+        foreach (var trail in trailRenderers)
+        {
+            trail.emitting = isOn;
+        }
     }
 }

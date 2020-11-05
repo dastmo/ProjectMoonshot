@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    public bool IsEnabled { get; set; } = true;
+    private bool _isEnabled = true;
+    public virtual bool IsEnabled
+    {
+        get => _isEnabled;
+        set
+        {
+            if (trailRenderer) trailRenderer.emitting = value;
+            _isEnabled = value;
+        }
+    }
 
 
     [SerializeField] private float throttleForce = 4f;
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private BotType botType;
+
+    private TrailRenderer trailRenderer;
 
     public BotType BotType { get => botType; }
 
@@ -24,6 +35,7 @@ public class PlayerControls : MonoBehaviour
 
     private void Awake()
     {
+        trailRenderer = GetComponentInChildren<TrailRenderer>();
         botController = FindObjectOfType<BotController>();
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;

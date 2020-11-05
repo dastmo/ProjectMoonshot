@@ -32,4 +32,12 @@ public class Utility : MonoBehaviour
         float angle = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         return angle;
     }
+
+    public static Vector2 RandomVector2(float min, float max)
+    {
+        float x = Random.Range(min, max);
+        float y = Random.Range(min, max);
+
+        return new Vector2(x, y);
+    }
 }

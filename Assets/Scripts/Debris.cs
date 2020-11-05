@@ -22,7 +22,7 @@ public class Debris : MonoBehaviour
         if (AutoSetValues)
         {
             SetInitialSize();
-            rb.velocity = SetInitialVelocity();
+            rb.velocity = Utility.RandomVector2(-5f, 5f);
         }
 
         GameController.TotalDebrisCount += 1;
@@ -32,14 +32,6 @@ public class Debris : MonoBehaviour
     private void FixedUpdate()
     {
         if (GameController.IsOutsidePlayArea(transform)) Destroy(gameObject);
-    }
-
-    private Vector2 SetInitialVelocity()
-    {
-        float x = Random.Range(-5f, 5f);
-        float y = Random.Range(-5f, 5f);
-
-        return new Vector2(x, y);
     }
 
     private void SetInitialSize()
