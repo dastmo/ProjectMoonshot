@@ -13,11 +13,17 @@ public class Debris : MonoBehaviour
 
     public float Size { get => size; }
 
+    public bool AutoSetValues { get; set; } = true;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        SetInitialSize();
-        rb.velocity = SetInitialVelocity();
+
+        if (AutoSetValues)
+        {
+            SetInitialSize();
+            rb.velocity = SetInitialVelocity();
+        }
 
         GameController.TotalDebrisCount += 1;
         GameController.TotalDebrisMass += rb.mass;
@@ -73,6 +79,28 @@ public class Debris : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    public void SetSize(float newSize)
+    {
+        size = newSize;
+        transform.localScale = new Vector2(size, size);
+
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
+
+        rb.mass = size;
+    }
+
+    public void SetVelocity(Vector2 newVelocity)
+    {
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
+        rb.velocity = newVelocity;
+    }
+
+    public void ApplyForce(Vector2 forceToApply)
+    {
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
+        rb.AddForce(forceToApply, ForceMode2D.Impulse);
     }
 
     private void OnDestroy()

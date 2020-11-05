@@ -15,6 +15,8 @@ public class VacuumBotControls : PlayerControls
     private bool isSucking = false;
     private bool isBlowing = false;
 
+    private float debrisSpitCooldown = 0.5f;
+
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -33,7 +35,9 @@ public class VacuumBotControls : PlayerControls
             isBlowing = false;
         }
 
+        debrisSpitCooldown -= Time.fixedDeltaTime;
         ControlEffectorForce();
+        SpitOutDebris();
     }
 
     private void ControlEffectorForce()
@@ -57,11 +61,29 @@ public class VacuumBotControls : PlayerControls
         Debris debris = collision.gameObject.GetComponent<Debris>();
 
         if (debris == null) return;
-        if (debris.Size > 20f) return;
+        if (debris.Size > 8f) return;
 
         currentBagMass += debris.Size;
         individualDebrisWeight.Add(debris.Size);
         Destroy(debris.gameObject);
+        ControlBagSize();
+    }
+
+    private void SpitOutDebris()
+    {
+        if (!isBlowing) return;
+        if (individualDebrisWeight.Count == 0) return;
+        if (debrisSpitCooldown > 0f) return;
+
+        GameObject newDebris = GameController.SpawnDebris(transform.position + (transform.right * 2f));
+        Debris debrisComponent = newDebris.GetComponent<Debris>();
+        debrisComponent.AutoSetValues = false;
+        debrisComponent.SetSize(individualDebrisWeight[0]);
+        debrisComponent.ApplyForce(transform.right * 100f);
+        currentBagMass -= individualDebrisWeight[0];
+        individualDebrisWeight.RemoveAt(0);
+        debrisSpitCooldown = 0.5f;
+
         ControlBagSize();
     }
 
