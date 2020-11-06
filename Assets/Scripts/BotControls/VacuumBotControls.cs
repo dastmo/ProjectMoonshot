@@ -18,7 +18,6 @@ public class VacuumBotControls : PlayerControls
 
     private float debrisSpitCooldown = 0.5f;
 
-    private bool _isEnabled = true;
     public override bool IsEnabled
     {
         get => _isEnabled;

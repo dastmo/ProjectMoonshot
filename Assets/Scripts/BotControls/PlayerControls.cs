@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    private bool _isEnabled = true;
+    protected bool _isEnabled = true;
     public virtual bool IsEnabled
     {
         get => _isEnabled;
@@ -20,7 +20,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private BotType botType;
 
-    private TrailRenderer trailRenderer;
+    protected TrailRenderer trailRenderer;
 
     public BotType BotType { get => botType; }
 

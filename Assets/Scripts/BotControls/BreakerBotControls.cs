@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class BreakerBotControls : PlayerControls
 {
-    [SerializeField] private Transform turretPoint;
-    [SerializeField] private float reloadTime = 3f;
+    [SerializeField] protected Transform turretPoint;
+    [SerializeField] protected float reloadTime = 3f;
     [SerializeField] private GameObject projectilePrefab;
 
-    private float cooldownTimer = 0f;
-    private bool onCooldown = false;
-    private GameObject loadedProjectile;
+    protected float cooldownTimer = 0f;
+    protected bool onCooldown = false;
+    protected GameObject loadedProjectile;
 
     protected override void Start()
     {
@@ -40,9 +40,10 @@ public class BreakerBotControls : PlayerControls
         loadedProjectile.transform.localPosition = turretPoint.localPosition;
     }
 
-    private void ShootMissile()
+    protected virtual void ShootMissile()
     {
-        Debug.Log("Shooting!");
+        if (!IsEnabled) return;
+
         if (onCooldown) return;
 
         loadedProjectile.transform.SetParent(null);
