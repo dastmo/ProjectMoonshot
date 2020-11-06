@@ -1,9 +1,9 @@
-Copyright (C) 2020 Damyan Momchev <dastmo@gmail.com>
+Copyright (C) 2020 Damyan Momchev (<dastmo@gmail.com>)
 
 This file is part of the Project Moonshot project.
 
 The Project Moonshot project can not be copied and/or distributed without the express
-permission of Damyan Momchev <dastmo@gmail.com>.
+permission of Damyan Momchev (<dastmo@gmail.com>).
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER ''AS IS'' AND ANY
 EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
