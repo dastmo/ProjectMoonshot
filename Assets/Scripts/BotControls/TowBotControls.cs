@@ -16,6 +16,19 @@ public class TowBotControls : BreakerBotControls
         base.FixedUpdate();
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            ShootMissile();
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            DetachHook();
+        }
+    }
+
     public void SetUpDistanceJoint(Debris debris, Vector2 contactPoint)
     {
         distanceJoint.connectedBody = debris.GetComponent<Rigidbody2D>();
@@ -30,13 +43,35 @@ public class TowBotControls : BreakerBotControls
 
         if (onCooldown) return;
 
+        if (loadedProjectile == null) return;
+
         loadedProjectile.transform.SetParent(null);
         Rigidbody2D projectileRb = loadedProjectile.GetComponent<Rigidbody2D>();
         projectileRb.isKinematic = false;
         projectileRb.velocity = (Utility.MouseToWorldPos() - (Vector2)transform.position).normalized * 25f;
+        shotTowHook = loadedProjectile.GetComponent<TowHook>();
+        shotTowHook.HookDestroyed += OnHookDestroyed;
 
         loadedProjectile = null;
-        cooldownTimer = reloadTime;
-        onCooldown = true;
+    }
+
+    private void DetachHook()
+    {
+        if (shotTowHook != null)
+        {
+            Destroy(shotTowHook.gameObject);
+        }
+
+        LoadProjectile();
+    }
+
+    private void OnHookDestroyed(TowHook hook)
+    {
+        if (hook != shotTowHook) return;
+
+        shotTowHook.HookDestroyed -= OnHookDestroyed;
+
+        shotTowHook = null;
+        distanceJoint.enabled = false;
     }
 }

@@ -33,9 +33,8 @@ public class BreakerBotControls : PlayerControls
         }
     }
 
-    private void LoadProjectile()
+    protected void LoadProjectile()
     {
-        Debug.Log("Loading projectile.");
         loadedProjectile = Instantiate(projectilePrefab, transform);
         loadedProjectile.transform.localPosition = turretPoint.localPosition;
     }

@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TowHook : MonoBehaviour
 {
+    public Action<TowHook> HookDestroyed;
+
     private bool isAttached = false;
 
     public TowBotControls ParentBot { get; set; }
@@ -57,5 +60,10 @@ public class TowHook : MonoBehaviour
         transform.SetParent(debris.transform);
         Utility.LookAt2d(transform, debris.transform.position);
         isAttached = true;
+    }
+
+    private void OnDestroy()
+    {
+        HookDestroyed?.Invoke(this);
     }
 }
