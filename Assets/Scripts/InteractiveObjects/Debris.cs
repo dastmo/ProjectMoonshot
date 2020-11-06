@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Debris : MonoBehaviour
 {
+    [SerializeField] private Sprite[] possibleSprites;
     public float maxSize { get; set; } = 50f;
     public float minSize { get; set; } = 10f;
 
@@ -14,6 +15,9 @@ public class Debris : MonoBehaviour
     public float Size { get => size; }
 
     public bool AutoSetValues { get; set; } = true;
+
+    private bool hasSwitchedColliders = false;
+    private int fixedUpdateCount = 0;
 
     private void Start()
     {
@@ -28,12 +32,35 @@ public class Debris : MonoBehaviour
         GameController.TotalDebrisCount += 1;
         GameController.TotalDebrisMass += rb.mass;
 
-        CreateFissures();
+        
+
+        ChooseSprite();
+
+        gameObject.AddComponent<CircleCollider2D>();
+
+        
     }
 
     private void FixedUpdate()
     {
         if (GameController.IsOutsidePlayArea(transform)) Destroy(gameObject);
+
+        if (!hasSwitchedColliders && fixedUpdateCount > 2)
+        {
+            CreateEdgeCollider();
+            CreateFissures();
+            hasSwitchedColliders = true;
+        }
+
+        if (!hasSwitchedColliders) fixedUpdateCount++;
+    }
+
+    private void ChooseSprite()
+    {
+        int index = Random.Range(0, possibleSprites.Length);
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        renderer.sprite = possibleSprites[index];
+        GetComponent<SpriteMask>().sprite = renderer.sprite;
     }
 
     private void SetInitialSize()
@@ -47,27 +74,41 @@ public class Debris : MonoBehaviour
     {
         float impactForce = collision.relativeVelocity.magnitude;
 
-        Debris debris = collision.gameObject.GetComponent<Debris>();
+        /* Debris debris = collision.gameObject.GetComponent<Debris>();
 
         if (debris && impactForce > 5f)
         {
             BreakDown();
-        }
+        } */
     }
 
     private void CreateFissures()
     {
-        if (size < 10f) return;
+        if (size < 10f)
+        {
+            Destroy(GetComponent<EdgeCollider2D>());
+            GetComponent<PolygonCollider2D>().enabled = true;
+            return;
+        }
 
         int numberOfFissures = Random.Range(1, 5);
 
         for (int i = 0; i < numberOfFissures; i++)
         {
             Vector2 fissureDir = Utility.RandomVector2(-1f, 1f).normalized;
-            GameObject newFissure = Instantiate(GameController.FissurePrefab, transform);
-            newFissure.transform.localPosition = fissureDir * 0.1f; // Magic number here. Link to collider radius.
-            Utility.LookAt2d(newFissure.transform, (Vector2) transform.position);
+            LayerMask layerMask = LayerMask.GetMask("Debris");
+            RaycastHit2D rayHit = Physics2D.Raycast(transform.position, fissureDir, 100f, layerMask);
+
+            if (rayHit)
+            {
+                GameObject newFissure = Instantiate(GameController.FissurePrefab, transform);
+                newFissure.transform.position = rayHit.point;
+                Utility.LookAt2d(newFissure.transform, (Vector2)transform.position);
+            }
         }
+
+        Destroy(GetComponent<EdgeCollider2D>());
+        GetComponent<PolygonCollider2D>().enabled = true;
     }
 
     public void BreakDown()
@@ -82,7 +123,7 @@ public class Debris : MonoBehaviour
             newPieceComp.maxSize = size / numberOfPieces;
             newPieceComp.minSize = newPieceComp.maxSize;
 
-            Vector2 randomForce = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
+            Vector2 randomForce = new Vector2(Random.Range(-20f, 20f), Random.Range(-20f, 20f));
 
             newPiece.GetComponent<Rigidbody2D>().AddForce(randomForce, ForceMode2D.Impulse);
         }
@@ -116,5 +157,27 @@ public class Debris : MonoBehaviour
     {
         GameController.TotalDebrisCount -= 1;
         GameController.TotalDebrisMass -= rb.mass;
+    }
+
+    private void CreateEdgeCollider()
+    {
+        Destroy(GetComponent<CircleCollider2D>());
+
+        PolygonCollider2D polygonCollider = gameObject.AddComponent<PolygonCollider2D>();
+
+        EdgeCollider2D edgeCollider = gameObject.AddComponent<EdgeCollider2D>();
+
+        Vector2[] points = polygonCollider.points;
+        List<Vector2> edgePoints = new List<Vector2>();
+
+        foreach (var point in points)
+        {
+            edgePoints.Add(point);
+        }
+
+        edgePoints.Add(points[0]);
+        edgeCollider.points = edgePoints.ToArray();
+
+        polygonCollider.enabled = false;
     }
 }

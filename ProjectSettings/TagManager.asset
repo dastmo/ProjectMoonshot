@@ -18,8 +18,8 @@ TagManager:
   - EarthGravity
   - Dustbin
   - PlayerProjectiles
-  - 
-  - 
+  - Debris
+  - Fissures
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: Debris
     uniqueID: 2167481439
+    locked: 0
+  - name: DebrisMask
+    uniqueID: 2356333381
     locked: 0
   - name: PlayerShips
     uniqueID: 4033822027

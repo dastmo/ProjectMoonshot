@@ -34,6 +34,23 @@ public class BreakerMissile : MonoBehaviour
     private void Explode()
     {
         // TODO: Add explosion effect.
+
+        HashSet<Debris> contactDebris = new HashSet<Debris>();
+        List<Collider2D> overlappingColliders = new List<Collider2D>();
+        ContactFilter2D contactFilter = new ContactFilter2D();
+        contactFilter.layerMask = LayerMask.GetMask("Fissures");
+        explosionCollider.OverlapCollider(contactFilter, overlappingColliders);
+
+        foreach (var item in overlappingColliders)
+        {
+            contactDebris.Add(item.GetComponentInParent<Debris>());
+        }
+
+        foreach (var item in contactDebris)
+        {
+            item.BreakDown();
+        }
+
         Destroy(gameObject);
     }
 
