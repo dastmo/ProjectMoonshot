@@ -50,6 +50,7 @@ public class BreakerBotControls : PlayerControls
         projectileRb.isKinematic = false;
         projectileRb.velocity = (Utility.MouseToWorldPos() - (Vector2)transform.position).normalized * 25f;
         loadedProjectile.GetComponentInChildren<TrailRenderer>().emitting = true;
+        loadedProjectile.GetComponent<BreakerMissile>().IsShot = true;
 
         loadedProjectile = null;
         cooldownTimer = reloadTime;

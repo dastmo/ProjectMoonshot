@@ -51,6 +51,7 @@ public class TowBotControls : BreakerBotControls
         projectileRb.velocity = (Utility.MouseToWorldPos() - (Vector2)transform.position).normalized * 25f;
         shotTowHook = loadedProjectile.GetComponent<TowHook>();
         shotTowHook.HookDestroyed += OnHookDestroyed;
+        shotTowHook.IsShot = true;
 
         loadedProjectile = null;
     }

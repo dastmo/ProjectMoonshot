@@ -5,6 +5,7 @@ using UnityEngine;
 public class Debris : MonoBehaviour
 {
     [SerializeField] private Sprite[] possibleSprites;
+    [SerializeField] private PhysicsMaterial2D physicsMaterial;
     public float maxSize { get; set; } = 50f;
     public float minSize { get; set; } = 10f;
 
@@ -26,19 +27,22 @@ public class Debris : MonoBehaviour
         if (AutoSetValues)
         {
             SetInitialSize();
-            rb.velocity = Utility.RandomVector2(-5f, 5f);
+            SetInitialVelocity();
         }
 
         GameController.TotalDebrisCount += 1;
         GameController.TotalDebrisMass += rb.mass;
-
-        
 
         ChooseSprite();
 
         gameObject.AddComponent<CircleCollider2D>();
 
         
+    }
+
+    public void SetInitialVelocity(float minVelocity = -5f, float maxVelocity = 5f)
+    {
+        rb.velocity = Utility.RandomVector2(minVelocity, maxVelocity);
     }
 
     private void FixedUpdate()
@@ -73,13 +77,6 @@ public class Debris : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         float impactForce = collision.relativeVelocity.magnitude;
-
-        /* Debris debris = collision.gameObject.GetComponent<Debris>();
-
-        if (debris && impactForce > 5f)
-        {
-            BreakDown();
-        } */
     }
 
     private void CreateFissures()
@@ -108,7 +105,9 @@ public class Debris : MonoBehaviour
         }
 
         Destroy(GetComponent<EdgeCollider2D>());
-        GetComponent<PolygonCollider2D>().enabled = true;
+        PolygonCollider2D polygonCollider = GetComponent<PolygonCollider2D>();
+        polygonCollider.enabled = true;
+        polygonCollider.sharedMaterial = physicsMaterial;
     }
 
     public void BreakDown()

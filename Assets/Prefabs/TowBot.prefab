@@ -150,7 +150,7 @@ DistanceJoint2D:
   m_GameObject: {fileID: 577001441377587176}
   m_Enabled: 0
   serializedVersion: 4
-  m_EnableCollision: 0
+  m_EnableCollision: 1
   m_ConnectedRigidBody: {fileID: 0}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity

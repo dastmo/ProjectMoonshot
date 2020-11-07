@@ -9,8 +9,13 @@ public class BreakerMissile : MonoBehaviour
 
     private Coroutine flashCoroutine;
 
+    public bool IsShot { get; set; } = false;
+    private bool isPrimed = false;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!IsShot) return;
+
         Debris debris = collision.gameObject.GetComponent<Debris>();
 
         if (debris)
@@ -19,7 +24,7 @@ public class BreakerMissile : MonoBehaviour
             return;
         }
 
-        Explode();
+        PrimeOnContact();
     }
 
     private void HandleDebris(Debris debris)
@@ -29,6 +34,15 @@ public class BreakerMissile : MonoBehaviour
         transform.SetParent(debris.transform);
         Destroy(GetComponent<Collider2D>());
         flashCoroutine = StartCoroutine(FlashAndExplode(3f));
+    }
+
+    private void PrimeOnContact()
+    {
+        if (!isPrimed)
+        {
+            flashCoroutine = StartCoroutine(FlashAndExplode(3f));
+            isPrimed = true;
+        }
     }
 
     private void Explode()
@@ -46,8 +60,14 @@ public class BreakerMissile : MonoBehaviour
             contactDebris.Add(item.GetComponentInParent<Debris>());
         }
 
+        if (contactDebris.Count == 0)
+        {
+            Destroy(gameObject);
+        }
+
         foreach (var item in contactDebris)
         {
+            if (item == null) continue;
             item.BreakDown();
         }
 

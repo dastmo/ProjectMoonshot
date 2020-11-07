@@ -206,6 +206,7 @@ MonoBehaviour:
   - {fileID: 6654041799243114038, guid: fe6ee97a9367357478775718924a896c, type: 3}
   - {fileID: 3456970333577038667, guid: fe6ee97a9367357478775718924a896c, type: 3}
   - {fileID: 8897679303660595066, guid: fe6ee97a9367357478775718924a896c, type: 3}
+  physicsMaterial: {fileID: 6200000, guid: 20ccf791f4ded9a48965227829632b4b, type: 2}
 --- !u!331 &4602583462889448181
 SpriteMask:
   m_ObjectHideFlags: 0
