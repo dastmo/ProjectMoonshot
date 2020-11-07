@@ -65,7 +65,7 @@ public class BotController : MonoBehaviour
 
         if (prefabToUse == null) return;
 
-        GameObject newBot = Instantiate(prefabToUse, new Vector3(0f, 40f, 0f), Quaternion.identity);
+        GameObject newBot = Instantiate(prefabToUse, GameController.DustbinPosition, GameController.DustbinRotation);
         newBot.GetComponent<PlayerControls>().IsEnabled = true;
         GameController.CenterCameraOnTarget(newBot.transform);
         GameController.OnBotSelect(newBot.gameObject);

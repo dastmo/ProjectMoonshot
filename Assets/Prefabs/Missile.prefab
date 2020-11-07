@@ -70,7 +70,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1755870537
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: -100
   m_Time: 2
   m_Parameters:
@@ -250,7 +250,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1755870537
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 59055237f3292d8489e3de22b184c4f4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -313,4 +313,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionCollider: {fileID: 8373868479983829296}
-  explosionParticles: {fileID: 0}
+  explosionParticles: {fileID: 2157372200645759627, guid: e29e444a9ac84cf4880a8888ea1ca201, type: 3}

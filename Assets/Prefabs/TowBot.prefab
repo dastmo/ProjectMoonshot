@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4718784141195589426}
   - component: {fileID: 690772835061333814}
   - component: {fileID: 1029161841728510177}
-  m_Layer: 8
+  m_Layer: 17
   m_Name: TowBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,7 +188,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3040325045809704008}
-  m_Layer: 12
+  m_Layer: 17
   m_Name: TowHookPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3219776774089283040}
   - component: {fileID: 3219776774089283047}
-  m_Layer: 8
+  m_Layer: 17
   m_Name: TrailRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6715861696157546602}
   - component: {fileID: 1816858641526410556}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: RadarSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

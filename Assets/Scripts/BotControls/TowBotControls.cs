@@ -29,11 +29,11 @@ public class TowBotControls : BreakerBotControls
         }
     }
 
-    public void SetUpDistanceJoint(Debris debris, Vector2 contactPoint)
+    public void SetUpDistanceJoint(GameObject objectToAttach, Vector2 contactPoint)
     {
-        distanceJoint.connectedBody = debris.GetComponent<Rigidbody2D>();
-        distanceJoint.connectedAnchor = debris.transform.InverseTransformPoint(contactPoint);
-        distanceJoint.distance = Vector2.Distance(transform.position, debris.transform.position);
+        distanceJoint.connectedBody = objectToAttach.GetComponent<Rigidbody2D>();
+        distanceJoint.connectedAnchor = objectToAttach.transform.InverseTransformPoint(contactPoint);
+        distanceJoint.distance = Vector2.Distance(transform.position, objectToAttach.transform.position);
         distanceJoint.enabled = true;
     }
 

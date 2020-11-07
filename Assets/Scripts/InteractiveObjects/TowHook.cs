@@ -50,20 +50,36 @@ public class TowHook : MonoBehaviour
 
         if (debris)
         {
-            HandleDebris(debris, collision.contacts[0].point);
+            HandleDebris(debris.gameObject, collision.contacts[0].point);
+            return;
+        }
+
+        PlayerControls playerBot = collision.gameObject.GetComponent<PlayerControls>();
+
+        if (playerBot)
+        {
+            HandleDebris(playerBot.gameObject, collision.contacts[0].point);
+            return;
+        }
+
+        Dustbin dustbin = collision.gameObject.GetComponent<Dustbin>();
+
+        if (dustbin)
+        {
+            HandleDebris(dustbin.gameObject, collision.contacts[0].point);
             return;
         }
 
         Destroy(gameObject);
     }
 
-    private void HandleDebris(Debris debris, Vector2 contactPoint)
+    private void HandleDebris(GameObject objectHit, Vector2 contactPoint)
     {
         Destroy(GetComponent<Collider2D>());
-        ParentBot.SetUpDistanceJoint(debris, contactPoint);
+        ParentBot.SetUpDistanceJoint(objectHit, contactPoint);
         GetComponent<Rigidbody2D>().isKinematic = true;
-        transform.SetParent(debris.transform);
-        Utility.LookAt2d(transform, debris.transform.position);
+        transform.SetParent(objectHit.transform);
+        Utility.LookAt2d(transform, objectHit.transform.position);
         AttachRope();
 
         isAttached = true;

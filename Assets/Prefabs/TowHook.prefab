@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8373868480648624762}
   - component: {fileID: 1203081058176530364}
   - component: {fileID: 2751211796264719911}
-  m_Layer: 12
+  m_Layer: 16
   m_Name: TowHook
   m_TagString: Untagged
   m_Icon: {fileID: 0}

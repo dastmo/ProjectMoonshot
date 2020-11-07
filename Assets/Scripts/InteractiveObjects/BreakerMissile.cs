@@ -52,17 +52,14 @@ public class BreakerMissile : MonoBehaviour
         HashSet<Debris> contactDebris = new HashSet<Debris>();
         List<Collider2D> overlappingColliders = new List<Collider2D>();
         ContactFilter2D contactFilter = new ContactFilter2D();
-        contactFilter.layerMask = LayerMask.GetMask("Fissures");
+        contactFilter.SetLayerMask(LayerMask.GetMask("Fissures"));
+        contactFilter.useTriggers = true;
         explosionCollider.OverlapCollider(contactFilter, overlappingColliders);
 
         foreach (var item in overlappingColliders)
         {
+            Debug.Log(item.gameObject.name);
             contactDebris.Add(item.GetComponentInParent<Debris>());
-        }
-
-        if (contactDebris.Count == 0)
-        {
-            Destroy(gameObject);
         }
 
         foreach (var item in contactDebris)
@@ -70,6 +67,8 @@ public class BreakerMissile : MonoBehaviour
             if (item == null) continue;
             item.BreakDown();
         }
+
+        Instantiate(explosionParticles, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }

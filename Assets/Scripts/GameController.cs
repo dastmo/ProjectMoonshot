@@ -31,6 +31,8 @@ public class GameController : MonoBehaviour
     private float totalDebrisCollectedMass = 0f;
     private int totalDebrisCollectedNumber = 0;
 
+    private Dustbin dustbin;
+
     private static GameController Instance;
 
     public static float MaxHeight { get => Instance.maxHeight; }
@@ -65,6 +67,16 @@ public class GameController : MonoBehaviour
         get => Instance.fissurePrefab;
     }
 
+    public static Vector2 DustbinPosition
+    {
+        get => Instance.dustbin.transform.position;
+    }
+
+    public static Quaternion DustbinRotation
+    {
+        get => Instance.dustbin.transform.rotation;
+    }
+
     public BotHealth CurrentBotHealth { get; set; }
 
     private CinemachineVirtualCamera followCamera;
@@ -82,6 +94,8 @@ public class GameController : MonoBehaviour
     {
         followCamera = (CinemachineVirtualCamera)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
         SpawnInitialDebris();
+
+        dustbin = FindObjectOfType<Dustbin>();
 
         Dustbin.DebrisCollected += OnDebrisCollected;
     }

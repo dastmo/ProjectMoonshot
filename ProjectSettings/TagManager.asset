@@ -56,3 +56,6 @@ TagManager:
   - name: PlayerProjectiles
     uniqueID: 2539096759
     locked: 0
+  - name: VFXTop
+    uniqueID: 2032887807
+    locked: 0
