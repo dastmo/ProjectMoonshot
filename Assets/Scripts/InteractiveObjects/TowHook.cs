@@ -47,33 +47,19 @@ public class TowHook : MonoBehaviour
         if (!IsShot) return;
 
         Debris debris = collision.gameObject.GetComponent<Debris>();
-
-        if (debris)
-        {
-            HandleDebris(debris.gameObject, collision.contacts[0].point);
-            return;
-        }
-
         PlayerControls playerBot = collision.gameObject.GetComponent<PlayerControls>();
-
-        if (playerBot)
-        {
-            HandleDebris(playerBot.gameObject, collision.contacts[0].point);
-            return;
-        }
-
         Dustbin dustbin = collision.gameObject.GetComponent<Dustbin>();
 
-        if (dustbin)
+        if (debris || playerBot || dustbin)
         {
-            HandleDebris(dustbin.gameObject, collision.contacts[0].point);
+            HandleContact(collision.gameObject, collision.contacts[0].point);
             return;
         }
 
         Destroy(gameObject);
     }
 
-    private void HandleDebris(GameObject objectHit, Vector2 contactPoint)
+    private void HandleContact(GameObject objectHit, Vector2 contactPoint)
     {
         Destroy(GetComponent<Collider2D>());
         ParentBot.SetUpDistanceJoint(objectHit, contactPoint);

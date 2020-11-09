@@ -128,7 +128,7 @@ public class PlayerControls : MonoBehaviour
             velocityVector = (Vector3.zero - transform.position).normalized * throttleForce * Time.deltaTime;
         }
 
-        if (Vector3.Distance(transform.position + velocityVector, Vector3.zero) < GameController.MaxHeight &&
+        if (Vector3.Distance(transform.position + velocityVector, Vector3.zero) < GameController.MaxHeight + 2f &&
             Vector3.Distance(transform.position + velocityVector, Vector3.zero) > GameController.MinHeight)
         {
             return velocityVector.normalized;

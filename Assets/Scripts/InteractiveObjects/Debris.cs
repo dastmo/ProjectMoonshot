@@ -1,11 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Debris : MonoBehaviour
 {
     [SerializeField] private Sprite[] possibleSprites;
     [SerializeField] private PhysicsMaterial2D physicsMaterial;
+    [SerializeField] private GameObject breakParticles;
+
     public float maxSize { get; set; } = 50f;
     public float minSize { get; set; } = 10f;
 
@@ -42,6 +46,7 @@ public class Debris : MonoBehaviour
 
     public void SetInitialVelocity(float minVelocity = -5f, float maxVelocity = 5f)
     {
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
         rb.velocity = Utility.RandomVector2(minVelocity, maxVelocity);
     }
 
@@ -127,16 +132,27 @@ public class Debris : MonoBehaviour
             newPiece.GetComponent<Rigidbody2D>().AddForce(randomForce, ForceMode2D.Impulse);
         }
 
+        GameObject particles = Instantiate(breakParticles, transform.position, Quaternion.identity);
+        particles.transform.localScale = new Vector3(size / 10f, size / 10f, size / 10f);
+
         Destroy(gameObject);
     }
 
     public void SetSize(float newSize)
     {
-        size = newSize;
+        size = (float)Math.Round(newSize, 2);
         transform.localScale = new Vector2(size, size);
 
         if (rb == null) rb = GetComponent<Rigidbody2D>();
 
+        rb.mass = size;
+    }
+
+    public void SetSize(float minSize, float maxSize)
+    {
+        size = (float)Math.Round(Random.Range(minSize, maxSize), 2);
+        transform.localScale = new Vector2(size, size);
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
         rb.mass = size;
     }
 

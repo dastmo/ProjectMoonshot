@@ -6,11 +6,14 @@ using UnityEngine;
 public class Dustbin : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer outsideSprite;
+    [SerializeField] private Collider2D insideTrigger;
 
     public static Action<float> DebrisCollected;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!collision.bounds.Intersects(insideTrigger.bounds)) return;
+
         Debris debris = collision.GetComponent<Debris>();
 
         if (debris)

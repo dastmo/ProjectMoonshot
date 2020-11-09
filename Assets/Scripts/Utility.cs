@@ -40,4 +40,12 @@ public class Utility : MonoBehaviour
 
         return new Vector2(x, y);
     }
+
+    public static Vector2 RandomVector2(float minX, float maxX, float minY, float maxY)
+    {
+        float x = Random.Range(minX, maxX);
+        float y = Random.Range(minY, maxY);
+
+        return new Vector2(x, y);
+    }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BotHealth : MonoBehaviour
 {
@@ -57,7 +58,28 @@ public class BotHealth : MonoBehaviour
 
         HealthChanged?.Invoke(CurrentHealth, startingHealth);
 
+        if (CurrentHealth <= 0)
+        {
+            DestroyShip();
+            return;
+        }
+
         StartCoroutine(DamageCooldown());
+    }
+
+    private void DestroyShip()
+    {
+        int rand = Random.Range(2, 5);
+        for (int i = 0; i < rand; i++)
+        {
+            GameObject newDebris = GameController.SpawnDebris(transform.position);
+            Debris debrisComponent = newDebris.GetComponent<Debris>();
+            debrisComponent.AutoSetValues = false;
+            debrisComponent.SetSize(GameController.SmallDebrisMinSize, GameController.MediumDebrisMinSize - 0.1f);
+            debrisComponent.SetInitialVelocity();
+        }
+
+        Destroy(gameObject);
     }
 
     private IEnumerator DamageCooldown()

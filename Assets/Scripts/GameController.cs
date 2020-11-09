@@ -1,7 +1,9 @@
 ﻿using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
 {
@@ -20,6 +22,11 @@ public class GameController : MonoBehaviour
     [SerializeField] private float largeDebrisMinSize = 35f;
     [SerializeField] private float debrisMaxSize = 50f;
 
+    [Header("Game Settings")]
+    [SerializeField] private int gameTimeMinutes = 30;
+
+    private int gameTimeRemainingSeconds = 0;
+
     private CircularEdge container;
     private float playAreaRadius;
 
@@ -30,6 +37,7 @@ public class GameController : MonoBehaviour
     private int totalDebrisNumber;
     private float totalDebrisCollectedMass = 0f;
     private int totalDebrisCollectedNumber = 0;
+    private float materialsAvailable = 0f;
 
     private Dustbin dustbin;
 
@@ -62,6 +70,36 @@ public class GameController : MonoBehaviour
         set { Instance.totalDebrisCollectedNumber = value; }
     }
 
+    public static float MaterialsAvailable
+    {
+        get { return Instance.materialsAvailable; }
+        set
+        { 
+            Instance.materialsAvailable = value;
+            Instance.materialsAvailable = (float)Math.Round(Instance.materialsAvailable, 2);
+        }
+    }
+
+    public static float SmallDebrisMinSize
+    {
+        get => Instance.smallDebrisMinSize;
+    }
+
+    public static float MediumDebrisMinSize
+    {
+        get => Instance.mediumDebrisMinSize;
+    }
+
+    public static float LargeDebrisMinSize
+    {
+        get => Instance.largeDebrisMinSize;
+    }
+
+    public static float DebrisMaxSize
+    {
+        get => Instance.debrisMaxSize;
+    }
+
     public static GameObject FissurePrefab
     {
         get => Instance.fissurePrefab;
@@ -88,6 +126,8 @@ public class GameController : MonoBehaviour
         playAreaRadius = container.Radius;
         maxHeight = playAreaRadius;
         minHeight = repulsorCollider.radius;
+
+        gameTimeRemainingSeconds = gameTimeMinutes * 60;
     }
 
     private void Start()
@@ -98,6 +138,8 @@ public class GameController : MonoBehaviour
         dustbin = FindObjectOfType<Dustbin>();
 
         Dustbin.DebrisCollected += OnDebrisCollected;
+
+        StartCoroutine(TimerCoroutine());
     }
 
     private void SpawnInitialDebris()
@@ -182,6 +224,7 @@ public class GameController : MonoBehaviour
     {
         Instance.CurrentBotHealth = botSelected.GetComponent<BotHealth>();
         Instance.CurrentBotHealth.BotSelected();
+        GameUIController.UpdateDebrisText(TotalDebrisCollectedMass, TotalDebrisCollectedNumber, MaterialsAvailable);
     }
 
     public static void CenterCameraOnTarget(Transform newCameraTarget)
@@ -197,8 +240,19 @@ public class GameController : MonoBehaviour
     private void OnDebrisCollected(float debrisSize)
     {
         totalDebrisCollectedMass += debrisSize;
+        materialsAvailable += (float)Math.Round(debrisSize, 2);
         totalDebrisCollectedNumber++;
 
-        GameUIController.UpdateDebrisText(totalDebrisCollectedMass, totalDebrisCollectedNumber);
+        GameUIController.UpdateDebrisText(totalDebrisCollectedMass, totalDebrisCollectedNumber, materialsAvailable);
+    }
+
+    private IEnumerator TimerCoroutine()
+    {
+        while (gameTimeRemainingSeconds >= 0)
+        {
+            GameUIController.UpdateTimerText(gameTimeRemainingSeconds);
+            yield return new WaitForSeconds(1f);
+            gameTimeRemainingSeconds--;
+        }
     }
 }
