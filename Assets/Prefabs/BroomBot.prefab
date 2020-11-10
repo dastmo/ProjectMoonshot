@@ -149,6 +149,8 @@ GameObject:
   - component: {fileID: 2643360274214876174}
   - component: {fileID: 2643360274214876173}
   - component: {fileID: 2643360274214876175}
+  - component: {fileID: 6404086081455084446}
+  - component: {fileID: 6647124382522921968}
   m_Layer: 8
   m_Name: Broom
   m_TagString: Untagged
@@ -228,7 +230,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2643360274214876177}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -256,6 +258,58 @@ PolygonCollider2D:
       - {x: 0.015881235, y: -0.06783664}
       - {x: 0.015246193, y: 0.06707357}
       - {x: -0.0029189317, y: 0.0685997}
+--- !u!61 &6404086081455084446
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2643360274214876177}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.001, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16666667, y: 0.16666667}
+    newSize: {x: 2, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.03, y: 0.13}
+  m_EdgeRadius: 0
+--- !u!61 &6647124382522921968
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2643360274214876177}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.05, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16666667, y: 0.16666667}
+    newSize: {x: 2, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.075, y: 0.02}
+  m_EdgeRadius: 0
 --- !u!1 &2643360275971315939
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,8 +463,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5084e02fdf36e498138a24b36a082b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  startingHealth: 25
   bodyCollider: {fileID: 2643360275971315937}
+  destroyParticles: {fileID: 3117301387534381713, guid: b23d6990b5a44c049873599c571e3782, type: 3}
+  destroyParticlesScale: {x: 1, y: 1, z: 1}
 --- !u!1 &6503655894744064064
 GameObject:
   m_ObjectHideFlags: 0

@@ -139,8 +139,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5084e02fdf36e498138a24b36a082b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  startingHealth: 25
   bodyCollider: {fileID: 577001441377587178}
+  destroyParticles: {fileID: 3117301387534381713, guid: b23d6990b5a44c049873599c571e3782, type: 3}
+  destroyParticlesScale: {x: 1, y: 1, z: 1}
 --- !u!232 &690772835061333814
 DistanceJoint2D:
   m_ObjectHideFlags: 0

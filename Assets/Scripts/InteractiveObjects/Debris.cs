@@ -10,6 +10,11 @@ public class Debris : MonoBehaviour
     [SerializeField] private PhysicsMaterial2D physicsMaterial;
     [SerializeField] private GameObject breakParticles;
 
+    [Header("Debug")]
+    [SerializeField] private bool isDebug = false;
+    [SerializeField] private float debugSize = 1f;
+    [SerializeField] private Vector2 debugInitialVelocity = Vector2.zero;
+
     public float maxSize { get; set; } = 50f;
     public float minSize { get; set; } = 10f;
 
@@ -28,10 +33,16 @@ public class Debris : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        if (AutoSetValues)
+        if (AutoSetValues && !isDebug)
         {
             SetInitialSize();
             SetInitialVelocity();
+        }
+
+        if (isDebug)
+        {
+            SetSize(debugSize);
+            SetVelocity(debugInitialVelocity);
         }
 
         GameController.TotalDebrisCount += 1;

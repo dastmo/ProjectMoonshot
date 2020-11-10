@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameUIController : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class GameUIController : MonoBehaviour
     [SerializeField] private Text debrisNumberText;
     [SerializeField] private Text materialsText;
     [SerializeField] private Text timerText;
+
+    [Header("Game Over")]
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private Text gameOverHeading;
+    [SerializeField] private Text gameOverParagraph;
 
     private static GameUIController Instance;
 
@@ -29,6 +35,18 @@ public class GameUIController : MonoBehaviour
     {
         float scaleX = currentHealth / maxHealth;
         healthSliderFill.transform.localScale = new Vector3(scaleX, 1f, 1f);
+    }
+
+    public void GameOverRestart()
+    {
+        SceneLoadingController.SceneIndexToLoad = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(1);
+    }
+
+    public void GameOverToMenu()
+    {
+        SceneLoadingController.SceneIndexToLoad = 0;
+        SceneManager.LoadScene(1);
     }
 
     public static void UpdateDebrisText(float massCollected, int numberCollected, float materialsAvailable)
@@ -57,6 +75,23 @@ public class GameUIController : MonoBehaviour
         else
         {
             Instance.timerText.text = string.Format("{0} {1}", minutes.ToString("D2"), seconds.ToString("D2"));
+        }
+    }
+
+    public static void ShowGameOverPanel(bool timerExpired, float debrisPercentage)
+    {
+        Instance.gameOverPanel.SetActive(true);
+        
+
+        if (timerExpired)
+        {
+            Instance.gameOverHeading.text = "Time's Up!";
+            Instance.gameOverParagraph.text = string.Format("You collected {0}% of the space junk.", (debrisPercentage * 100).ToString("0.00"));
+        }
+        else
+        {
+            Instance.gameOverHeading.text = "Job Done!";
+            Instance.gameOverParagraph.text = "You collected all of the space junk! Incredible!";
         }
     }
 

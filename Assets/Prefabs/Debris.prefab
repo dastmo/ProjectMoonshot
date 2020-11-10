@@ -185,7 +185,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: be4373e3bf49ea8498197144b87de90b, type: 2}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
@@ -208,6 +208,9 @@ MonoBehaviour:
   - {fileID: 8897679303660595066, guid: fe6ee97a9367357478775718924a896c, type: 3}
   physicsMaterial: {fileID: 6200000, guid: 20ccf791f4ded9a48965227829632b4b, type: 2}
   breakParticles: {fileID: 3117301387534381713, guid: b23d6990b5a44c049873599c571e3782, type: 3}
+  isDebug: 0
+  debugSize: 1
+  debugInitialVelocity: {x: 0, y: 0}
 --- !u!331 &4602583462889448181
 SpriteMask:
   m_ObjectHideFlags: 0

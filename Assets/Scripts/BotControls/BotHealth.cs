@@ -8,6 +8,8 @@ public class BotHealth : MonoBehaviour
 {
     [SerializeField] private float startingHealth = 100f;
     [SerializeField] private Collider2D bodyCollider;
+    [SerializeField] private GameObject destroyParticles;
+    [SerializeField] private Vector3 destroyParticlesScale = new Vector3(1f, 1f, 1f);
 
     private bool canTakeDamage = true;
 
@@ -79,6 +81,8 @@ public class BotHealth : MonoBehaviour
             debrisComponent.SetInitialVelocity();
         }
 
+        GameObject particles = Instantiate(destroyParticles, transform.position, Quaternion.identity);
+        particles.transform.localScale = destroyParticlesScale;
         Destroy(gameObject);
     }
 

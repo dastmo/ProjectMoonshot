@@ -130,6 +130,19 @@ public class GameController : MonoBehaviour
         gameTimeRemainingSeconds = gameTimeMinutes * 60;
     }
 
+    private void Update()
+    {
+        if (TotalDebrisCount <= 0)
+        {
+            GameUIController.ShowGameOverPanel(false, 1f);
+        }
+        else if (gameTimeRemainingSeconds <= 0f)
+        {
+            float percentage = totalDebrisCollectedMass / (totalDebrisCollectedMass + totalDebrisMass);
+            GameUIController.ShowGameOverPanel(true, percentage);
+        }
+    }
+
     private void Start()
     {
         followCamera = (CinemachineVirtualCamera)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
@@ -254,5 +267,10 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(1f);
             gameTimeRemainingSeconds--;
         }
+    }
+
+    private void EndGame(bool timerExpired)
+    {
+
     }
 }
