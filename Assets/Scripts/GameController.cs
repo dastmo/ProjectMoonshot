@@ -39,6 +39,10 @@ public class GameController : MonoBehaviour
     private int totalDebrisCollectedNumber = 0;
     private float materialsAvailable = 0f;
 
+    private bool inititalDebrisSpawned = false;
+    private bool timerStarted = false;
+    private bool gameStarted { get { return inititalDebrisSpawned && timerStarted; } }
+
     private Dustbin dustbin;
 
     private static GameController Instance;
@@ -132,11 +136,11 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (TotalDebrisCount <= 0)
+        if (TotalDebrisCount <= 0 && gameStarted)
         {
             GameUIController.ShowGameOverPanel(false, 1f);
         }
-        else if (gameTimeRemainingSeconds <= 0f)
+        else if (gameTimeRemainingSeconds <= 0f && gameStarted)
         {
             float percentage = totalDebrisCollectedMass / (totalDebrisCollectedMass + totalDebrisMass);
             GameUIController.ShowGameOverPanel(true, percentage);
@@ -213,6 +217,8 @@ public class GameController : MonoBehaviour
             debrisComponent.SetSize(Random.Range(largeDebrisMinSize, debrisMaxSize));
             debrisComponent.SetInitialVelocity();
         }
+
+        inititalDebrisSpawned = true;
     }
 
     public static GameObject SpawnDebris(Vector2 position)
@@ -261,16 +267,13 @@ public class GameController : MonoBehaviour
 
     private IEnumerator TimerCoroutine()
     {
+        timerStarted = true;
+
         while (gameTimeRemainingSeconds >= 0)
         {
             GameUIController.UpdateTimerText(gameTimeRemainingSeconds);
             yield return new WaitForSeconds(1f);
             gameTimeRemainingSeconds--;
         }
-    }
-
-    private void EndGame(bool timerExpired)
-    {
-
     }
 }

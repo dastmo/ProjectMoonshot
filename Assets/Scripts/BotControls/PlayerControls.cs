@@ -144,7 +144,7 @@ public class PlayerControls : MonoBehaviour
         rb.SetRotation(Utility.GetAngle(transform.position, Utility.MouseToWorldPos(mainCamera)));
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         botController.UnregisterBot(this);
     }

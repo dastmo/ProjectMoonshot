@@ -133,4 +133,10 @@ public class VacuumBotControls : PlayerControls
             trail.emitting = isOn;
         }
     }
+
+    protected override void OnDestroy()
+    {
+        BagOverflow();
+        base.OnDestroy();
+    }
 }
