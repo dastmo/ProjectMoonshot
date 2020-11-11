@@ -8,7 +8,11 @@ public class VacuumBotControls : PlayerControls
     [SerializeField] private Transform bagTransform;
     [SerializeField] private Collider2D vacuumAttachmentCollider;
     [SerializeField] private AreaEffector2D vacuumEffector;
+
+    [Header("Particles")]
     [SerializeField] private TrailRenderer[] trailRenderers;
+    [SerializeField] private ParticleSystem suckParticles;
+    [SerializeField] private ParticleSystem blowParticles;
 
     private float currentBagMass;
     private List<float> individualDebrisWeight = new List<float>();
@@ -18,6 +22,15 @@ public class VacuumBotControls : PlayerControls
 
     private float debrisSpitCooldown = 0.5f;
 
+    private enum VacuumStatus
+    {
+        Off,
+        Sucking,
+        Blowing
+    }
+
+    private VacuumStatus previousFrameStatus = VacuumStatus.Off;
+
     public override bool IsEnabled
     {
         get => _isEnabled;
@@ -26,6 +39,13 @@ public class VacuumBotControls : PlayerControls
             _isEnabled = value;
             ToggleTrails(value);
         }
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        suckParticles.Stop();
+        blowParticles.Stop();
     }
 
     protected override void FixedUpdate()
@@ -48,6 +68,7 @@ public class VacuumBotControls : PlayerControls
 
         debrisSpitCooldown -= Time.fixedDeltaTime;
         ControlEffectorForce();
+        ControlParticles();
         SpitOutDebris();
     }
 
@@ -56,6 +77,37 @@ public class VacuumBotControls : PlayerControls
         if (isSucking) vacuumEffector.forceMagnitude = -10f;
         else if (isBlowing) vacuumEffector.forceMagnitude = 10f;
         else vacuumEffector.forceMagnitude = 0f;
+    }
+
+    private void ControlParticles()
+    {
+        VacuumStatus currentStatus;
+
+        if (isSucking) currentStatus = VacuumStatus.Sucking;
+        else if (isBlowing) currentStatus = VacuumStatus.Blowing;
+        else currentStatus = VacuumStatus.Off;
+
+        if (currentStatus == previousFrameStatus) return;
+
+        switch (currentStatus)
+        {
+            case VacuumStatus.Off:
+                blowParticles.Stop();
+                suckParticles.Stop();
+                break;
+            case VacuumStatus.Sucking:
+                suckParticles.Play();
+                blowParticles.Stop();
+                break;
+            case VacuumStatus.Blowing:
+                blowParticles.Play();
+                suckParticles.Stop();
+                break;
+            default:
+                break;
+        }
+
+        previousFrameStatus = currentStatus;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
