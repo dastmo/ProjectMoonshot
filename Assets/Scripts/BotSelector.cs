@@ -94,6 +94,7 @@ public class BotSelector : MonoBehaviour
     private void OnDestroy()
     {
         BotController.BotDestroyed -= OnBotDestroyed;
+        BotController.BotSpawned -= OnBotSpawned;
         if (botHealth != null) botHealth.TakenDamage -= OnDamageTaken;
     }
 }

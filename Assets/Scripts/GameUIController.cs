@@ -12,11 +12,14 @@ public class GameUIController : MonoBehaviour
     [SerializeField] private Text debrisNumberText;
     [SerializeField] private Text materialsText;
     [SerializeField] private Text timerText;
+    [SerializeField] private GameObject pausePanel;
 
     [Header("Game Over")]
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private Text gameOverHeading;
     [SerializeField] private Text gameOverParagraph;
+
+    private bool isPaused = false;
 
     private static GameUIController Instance;
 
@@ -29,6 +32,14 @@ public class GameUIController : MonoBehaviour
     {
         BotHealth.HealthChanged += UpdateHealthSlider;
         UpdateDebrisText(0f, 0, 0f);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
     }
 
     private void UpdateHealthSlider(float currentHealth, float maxHealth)
@@ -93,6 +104,22 @@ public class GameUIController : MonoBehaviour
             Instance.gameOverHeading.text = "Job Done!";
             Instance.gameOverParagraph.text = "You collected all of the space junk! Incredible!";
         }
+    }
+
+    public static void TogglePause()
+    {
+        if (Instance.isPaused)
+        {
+            Instance.pausePanel.SetActive(false);
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            Instance.pausePanel.SetActive(true);
+            Time.timeScale = 0f;
+        }
+
+        Instance.isPaused = !Instance.isPaused;
     }
 
     private void OnDestroy()

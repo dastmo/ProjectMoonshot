@@ -9,6 +9,7 @@ public class SceneLoadingController : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
         StartCoroutine(LoadScene(SceneIndexToLoad));
     }
 
