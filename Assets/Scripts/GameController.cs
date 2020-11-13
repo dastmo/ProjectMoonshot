@@ -123,6 +123,8 @@ public class GameController : MonoBehaviour
 
     private CinemachineVirtualCamera followCamera;
 
+    public static Action<float> MaterialsAvailableChanged;
+
     private void Awake()
     {
         Instance = this;
@@ -130,6 +132,9 @@ public class GameController : MonoBehaviour
         playAreaRadius = container.Radius;
         maxHeight = playAreaRadius;
         minHeight = repulsorCollider.radius;
+
+        dustbin = FindObjectOfType<Dustbin>();
+        followCamera = (CinemachineVirtualCamera)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
 
         gameTimeRemainingSeconds = gameTimeMinutes * 60;
     }
@@ -149,11 +154,8 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        followCamera = (CinemachineVirtualCamera)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
         SpawnInitialDebris();
-
-        dustbin = FindObjectOfType<Dustbin>();
-
+        
         Dustbin.DebrisCollected += OnDebrisCollected;
 
         StartCoroutine(TimerCoroutine());
@@ -248,6 +250,11 @@ public class GameController : MonoBehaviour
 
     public static void CenterCameraOnTarget(Transform newCameraTarget)
     {
+        if (Instance.followCamera == null)
+        {
+            Instance.followCamera = (CinemachineVirtualCamera)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
+        }
+
         Instance.followCamera.Follow = newCameraTarget;
     }
 
@@ -260,6 +267,7 @@ public class GameController : MonoBehaviour
     {
         totalDebrisCollectedMass += debrisSize;
         materialsAvailable += (float)Math.Round(debrisSize, 2);
+        MaterialsAvailableChanged?.Invoke(materialsAvailable);
         totalDebrisCollectedNumber++;
 
         GameUIController.UpdateDebrisText(totalDebrisCollectedMass, totalDebrisCollectedNumber, materialsAvailable);

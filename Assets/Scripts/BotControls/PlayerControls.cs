@@ -20,6 +20,10 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private BotType botType;
 
+    [Header("Dustbin Collision Settings")]
+    [SerializeField] private GameObject[] attachments;
+    [SerializeField] private int attachmentsLayerId;
+
     protected TrailRenderer trailRenderer;
 
     public BotType BotType { get => botType; }
@@ -135,6 +139,22 @@ public class PlayerControls : MonoBehaviour
         }
 
         return Vector2.zero;
+    }
+
+    public void ExitDustbin()
+    {
+        foreach (var item in attachments)
+        {
+            item.layer = attachmentsLayerId;
+        }
+    }
+
+    public void EnterDustbin(int layerId)
+    {
+        foreach (var item in attachments)
+        {
+            item.layer = layerId;
+        }
     }
 
     private void LookAtMouse()

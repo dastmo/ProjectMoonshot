@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 825230059}
   - component: {fileID: 825230060}
-  m_Layer: 8
+  m_Layer: 24
   m_Name: TrailRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 2643360274214876175}
   - component: {fileID: 6404086081455084446}
   - component: {fileID: 6647124382522921968}
-  m_Layer: 8
+  m_Layer: 25
   m_Name: Broom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 2643360275971315937}
   - component: {fileID: 2643360275971315932}
   - component: {fileID: 7913542278635888697}
-  m_Layer: 8
+  m_Layer: 24
   m_Name: BroomBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -451,6 +451,9 @@ MonoBehaviour:
   throttleForce: 4
   maxSpeed: 10
   botType: 1
+  attachments:
+  - {fileID: 2643360274214876177}
+  attachmentsLayerId: 25
 --- !u!114 &7913542278635888697
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,6 +17,26 @@ public class BotController : MonoBehaviour
 
     private List<PlayerControls> SpawnedBots = new List<PlayerControls>();
 
+    public static Action<PlayerControls> BotSpawned;
+    public static Action<PlayerControls> BotDestroyed;
+
+    public static BotController Instance;
+
+    public static float BroomBotCost { get => Instance.broomBotCost; }
+    public static float VacuumBotCost { get => Instance.vacuumBotCost; }
+    public static float BreakerBotCost { get => Instance.breakerBotCost; }
+    public static float TowBotCost { get => Instance.towBotCost; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    private void Start()
+    {
+        SelectBot(BotType.Broom);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -40,11 +60,13 @@ public class BotController : MonoBehaviour
     public void RegisterBot(PlayerControls botControls)
     {
         SpawnedBots.Add(botControls);
+        BotSpawned?.Invoke(botControls);
     }
 
     public void UnregisterBot(PlayerControls botControls)
     {
         SpawnedBots.Remove(botControls);
+        BotDestroyed?.Invoke(botControls);
     }
 
     public bool SpawnBot(BotType botType)

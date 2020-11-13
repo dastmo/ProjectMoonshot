@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203526445063085921}
-  m_Layer: 8
+  m_Layer: 22
   m_Name: TurretPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6539653455815164640}
   - component: {fileID: 6539653455815164647}
-  m_Layer: 8
+  m_Layer: 22
   m_Name: TrailRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 9110392823946074346}
   - component: {fileID: 3968525510712254514}
   - component: {fileID: 89885328386336101}
-  m_Layer: 8
+  m_Layer: 22
   m_Name: BreakerBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,6 +407,8 @@ MonoBehaviour:
   throttleForce: 4
   maxSpeed: 10
   botType: 4
+  attachments: []
+  attachmentsLayerId: 23
   turretPoint: {fileID: 4203526445063085921}
   reloadTime: 3
   projectilePrefab: {fileID: 8373868480648624760, guid: 8956f6a91001c574bb0a296da08c014b, type: 3}

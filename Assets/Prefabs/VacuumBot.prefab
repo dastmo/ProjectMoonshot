@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1998525771009594170}
   - component: {fileID: 4141826138115681163}
   - component: {fileID: 3175982877347905731}
-  m_Layer: 8
+  m_Layer: 21
   m_Name: VacuumBag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 2643360275971315937}
   - component: {fileID: 7913542278635888697}
   - component: {fileID: 5462092887654891380}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: VacuumBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,6 +260,12 @@ MonoBehaviour:
   throttleForce: 4
   maxSpeed: 10
   botType: 2
+  attachments:
+  - {fileID: 5979443496121225827}
+  - {fileID: 5789548260730697958}
+  - {fileID: 8951250305858947406}
+  - {fileID: 941125855464206824}
+  attachmentsLayerId: 21
   maximumBagCapacity: 100
   bagTransform: {fileID: 1998525771009594170}
   vacuumAttachmentCollider: {fileID: 725279989218385734}
@@ -279,7 +285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4267400329196928594}
   - component: {fileID: 1657135203770464462}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: TrailRendererLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,7 +424,7 @@ GameObject:
   - component: {fileID: 8695287380584518581}
   - component: {fileID: 7536030389243474297}
   - component: {fileID: 1918679803904806094}
-  m_Layer: 8
+  m_Layer: 21
   m_Name: Effector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -496,7 +502,7 @@ GameObject:
   - component: {fileID: 7542401252258369350}
   - component: {fileID: 9054254866947198419}
   - component: {fileID: 725279989218385734}
-  m_Layer: 8
+  m_Layer: 21
   m_Name: VacuumAttachment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -606,7 +612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6726198891787219276}
   - component: {fileID: 7662454702749320205}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: TrailRendererRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -826,7 +832,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2626785499668919904}
   - component: {fileID: 8472138297453565514}
-  m_Layer: 8
+  m_Layer: 21
   m_Name: PipeCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,6 +942,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VacuumSuckParticles
       objectReference: {fileID: 0}
+    - target: {fileID: 8106034222196878777, guid: cab39e3bdf4ba2a42abd26cc37ec12f6, type: 3}
+      propertyPath: m_Layer
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cab39e3bdf4ba2a42abd26cc37ec12f6, type: 3}
 --- !u!4 &8824505690467018283 stripped
@@ -958,6 +968,10 @@ PrefabInstance:
     - target: {fileID: 1207668184822433022, guid: cde84c1ba88263f46866c3ceeec55709, type: 3}
       propertyPath: m_Name
       value: VacuumBlowParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 1207668184822433022, guid: cde84c1ba88263f46866c3ceeec55709, type: 3}
+      propertyPath: m_Layer
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8701458388476976713, guid: cde84c1ba88263f46866c3ceeec55709, type: 3}
       propertyPath: m_LocalPosition.x

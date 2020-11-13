@@ -16,6 +16,7 @@ public class BotHealth : MonoBehaviour
     private PlayerControls playerControls;
 
     public static Action<float, float> HealthChanged;
+    public Action<BotHealth> TakenDamage;
 
     public float CurrentHealth
     {
@@ -26,6 +27,8 @@ public class BotHealth : MonoBehaviour
             return result;
         }
     }
+
+    public float MaxHealth { get => startingHealth; }
 
     private float damage = 0f;
 
@@ -59,6 +62,7 @@ public class BotHealth : MonoBehaviour
         }
 
         HealthChanged?.Invoke(CurrentHealth, startingHealth);
+        TakenDamage?.Invoke(this);
 
         if (CurrentHealth <= 0)
         {

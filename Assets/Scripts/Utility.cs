@@ -48,4 +48,23 @@ public class Utility : MonoBehaviour
 
         return new Vector2(x, y);
     }
+
+    public static bool GetPlayerPrefsBool(string key, bool defaultValue = false)
+    {
+        int defaultValueInt = defaultValue ? 1 : 0;
+        int value = PlayerPrefs.GetInt(key, defaultValueInt);
+
+        PlayerPrefs.SetInt(key, value);
+
+        if (value == 0)
+            return false;
+        else
+            return true;
+    }
+
+    public static void SetPlayerPrefsBool(string key, bool value)
+    {
+        int intValue = value ? 1 : 0;
+        PlayerPrefs.SetInt(key, intValue);
+    }
 }

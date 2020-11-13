@@ -25,14 +25,14 @@ TagManager:
   - TowBot
   - DebrisContainer
   - BotsContainer
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - VacuumBot
+  - VaccumBotAttachments
+  - BreakerBot
+  - BreakerBotAttachments
+  - BroomBot
+  - BroomBotAttachments
+  - DustbinShipsTrigger
+  - DustbinInsideTrigger
   - 
   - 
   - 

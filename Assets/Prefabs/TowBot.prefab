@@ -177,6 +177,8 @@ MonoBehaviour:
   throttleForce: 4
   maxSpeed: 10
   botType: 3
+  attachments: []
+  attachmentsLayerId: 17
   turretPoint: {fileID: 3040325045809704008}
   reloadTime: 3
   projectilePrefab: {fileID: 8373868480648624760, guid: 15f671707beb6854f92fab31b59c754d, type: 3}
@@ -359,7 +361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6715861696157546602}
   - component: {fileID: 1816858641526410556}
-  m_Layer: 17
+  m_Layer: 15
   m_Name: RadarSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

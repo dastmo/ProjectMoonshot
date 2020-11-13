@@ -7,20 +7,22 @@ public class Dustbin : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer outsideSprite;
     [SerializeField] private Collider2D insideTrigger;
+    [SerializeField] private Collider2D shipsTrigger;
 
     public static Action<float> DebrisCollected;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /* private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.bounds.Intersects(insideTrigger.bounds)) return;
-
-        Debris debris = collision.GetComponent<Debris>();
-
-        if (debris)
+        if (collision.bounds.Intersects(insideTrigger.bounds))
         {
-            DebrisCollected?.Invoke(debris.Size);
-            Destroy(collision.gameObject);
-            return;
+            Debris debris = collision.GetComponent<Debris>();
+
+            if (debris)
+            {
+                DebrisCollected?.Invoke(debris.Size);
+                Destroy(collision.gameObject);
+                return;
+            }
         }
 
         PlayerControls player = collision.GetComponent<PlayerControls>();
@@ -28,6 +30,7 @@ public class Dustbin : MonoBehaviour
         if (player)
         {
             HideOutsideSprite();
+            player.EnterDustbin(gameObject.layer);
         }
     }
 
@@ -38,17 +41,18 @@ public class Dustbin : MonoBehaviour
         if (player)
         {
             ShowOutsideSprite();
+            player.ExitDustbin();
         }
-    }
+    } */
 
-    private void HideOutsideSprite()
+    public void HideOutsideSprite()
     {
         if (outsideSprite == null) outsideSprite = GetComponent<SpriteRenderer>();
 
         outsideSprite.color = new Color(.5f, .5f, .5f, 0.25f);
     }
 
-    private void ShowOutsideSprite()
+    public void ShowOutsideSprite()
     {
         if (outsideSprite == null) outsideSprite = GetComponent<SpriteRenderer>();
 
