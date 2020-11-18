@@ -19,6 +19,9 @@ public class GameUIController : MonoBehaviour
     [SerializeField] private Text gameOverHeading;
     [SerializeField] private Text gameOverParagraph;
 
+    [Header("Cursor")]
+    [SerializeField] private Texture2D cursorTexture;
+
     private bool isPaused = false;
 
     private static GameUIController Instance;
@@ -30,6 +33,8 @@ public class GameUIController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
     }
 
     private void Start()

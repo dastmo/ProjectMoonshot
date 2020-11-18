@@ -14,6 +14,19 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private Button resetTutorialsButton;
 
+    [Header("Cursor")]
+    [SerializeField] private Texture2D cursorTexture;
+
+    private void Awake()
+    {
+        SetCursor(cursorTexture);
+    }
+
+    private void SetCursor(Texture2D cursor)
+    {
+        Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
+    }
+
     public void LoadGameScene()
     {
         SceneLoadingController.SceneIndexToLoad = 2;

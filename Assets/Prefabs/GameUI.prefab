@@ -4998,6 +4998,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 2144915946283694128}
   gameOverHeading: {fileID: 4404410025184203710}
   gameOverParagraph: {fileID: 344791420086822825}
+  cursorTexture: {fileID: 2800000, guid: 895bd7c18ec361b49b980ff6a4bd251e, type: 3}
 --- !u!114 &9033127000260951273
 MonoBehaviour:
   m_ObjectHideFlags: 0

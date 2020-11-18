@@ -7,9 +7,12 @@ public class SceneLoadingController : MonoBehaviour
 {
     public static int SceneIndexToLoad { get; set; } = 2;
 
+    [SerializeField] private Texture2D cursorTexture;
+
     private void Start()
     {
         Time.timeScale = 1f;
+        Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
         StartCoroutine(LoadScene(SceneIndexToLoad));
     }
 

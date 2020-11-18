@@ -2005,6 +2005,7 @@ MonoBehaviour:
   musicSlider: {fileID: 186494024}
   sfxSlider: {fileID: 377080005}
   resetTutorialsButton: {fileID: 16131696}
+  cursorTexture: {fileID: 2800000, guid: 693c219b0811e7442856035cdeb2f00d, type: 3}
 --- !u!1 &1310236242
 GameObject:
   m_ObjectHideFlags: 0
