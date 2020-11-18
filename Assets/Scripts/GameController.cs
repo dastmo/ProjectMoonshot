@@ -43,6 +43,8 @@ public class GameController : MonoBehaviour
     private bool timerStarted = false;
     private bool gameStarted { get { return inititalDebrisSpawned && timerStarted; } }
 
+    private bool movementTutorialShown = false;
+
     private Dustbin dustbin;
 
     private static GameController Instance;
@@ -137,10 +139,19 @@ public class GameController : MonoBehaviour
         followCamera = (CinemachineVirtualCamera)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
 
         gameTimeRemainingSeconds = gameTimeMinutes * 60;
+
+        TutorialController.TutorialClosed += OnTutorialClosed;
     }
 
     private void Update()
     {
+        if (gameStarted && !movementTutorialShown)
+        {
+            TutorialController.ShowTutorial("Movement");
+            movementTutorialShown = true;
+            
+        }
+
         if (TotalDebrisCount <= 0 && gameStarted)
         {
             GameUIController.ShowGameOverPanel(false, 1f);
@@ -149,6 +160,14 @@ public class GameController : MonoBehaviour
         {
             float percentage = totalDebrisCollectedMass / (totalDebrisCollectedMass + totalDebrisMass);
             GameUIController.ShowGameOverPanel(true, percentage);
+        }
+    }
+
+    private void OnTutorialClosed(string key)
+    {
+        if (key == "Movement")
+        {
+            TutorialController.ShowTutorial("Dustbin");
         }
     }
 
@@ -261,6 +280,7 @@ public class GameController : MonoBehaviour
     private void OnDestroy()
     {
         Dustbin.DebrisCollected -= OnDebrisCollected;
+        TutorialController.TutorialClosed -= OnTutorialClosed;
     }
 
     private void OnDebrisCollected(float debrisSize)

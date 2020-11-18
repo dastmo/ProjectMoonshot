@@ -23,10 +23,10 @@ public class BotSelector : MonoBehaviour
     {
         healthBar.SetActive(false);
         priceLabel.SetActive(true);
-        priceText.text = GetPriceText(botType).ToString();
+        priceText.text = GetPrice(botType).ToString();
     }
 
-    private float GetPriceText(BotType botType)
+    private float GetPrice(BotType botType)
     {
         switch (botType)
         {
@@ -81,7 +81,7 @@ public class BotSelector : MonoBehaviour
 
     public void ToggleSelector(bool isOn = true)
     {
-        if (!isOn && botHealth != null) return;
+        if (!isOn && (botHealth != null || GetPrice(botType) <= GameController.MaterialsAvailable)) return;
 
         gameObject.SetActive(isOn);
     }

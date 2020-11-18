@@ -23,6 +23,10 @@ public class GameUIController : MonoBehaviour
 
     private static GameUIController Instance;
 
+    public static bool TutorialOpen = false;
+
+    public static bool GamePaused { get => Instance.isPaused; }
+
     private void Awake()
     {
         Instance = this;
@@ -36,9 +40,14 @@ public class GameUIController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !TutorialOpen)
         {
             TogglePause();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape) && TutorialOpen)
+        {
+            TutorialController.CloseTutorial();
         }
     }
 

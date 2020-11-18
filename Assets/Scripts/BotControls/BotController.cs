@@ -117,6 +117,10 @@ public class BotController : MonoBehaviour
             {
                 return;
             }
+            else
+            {
+                TutorialController.ShowBotTutorial(botType);
+            }
         }
 
         foreach (PlayerControls bot in SpawnedBots)

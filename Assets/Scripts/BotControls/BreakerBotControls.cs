@@ -45,6 +45,8 @@ public class BreakerBotControls : PlayerControls
 
         if (onCooldown) return;
 
+        if (GameUIController.TutorialOpen || GameUIController.GamePaused) return;
+
         loadedProjectile.transform.SetParent(null);
         Rigidbody2D projectileRb = loadedProjectile.GetComponent<Rigidbody2D>();
         projectileRb.isKinematic = false;

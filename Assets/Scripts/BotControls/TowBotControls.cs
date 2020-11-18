@@ -45,6 +45,8 @@ public class TowBotControls : BreakerBotControls
 
         if (loadedProjectile == null) return;
 
+        if (GameUIController.TutorialOpen || GameUIController.GamePaused) return;
+
         loadedProjectile.transform.SetParent(null);
         Rigidbody2D projectileRb = loadedProjectile.GetComponent<Rigidbody2D>();
         projectileRb.isKinematic = false;
@@ -58,6 +60,8 @@ public class TowBotControls : BreakerBotControls
 
     private void DetachHook()
     {
+        if (GameUIController.TutorialOpen || GameUIController.GamePaused) return;
+
         if (shotTowHook != null)
         {
             Destroy(shotTowHook.gameObject);

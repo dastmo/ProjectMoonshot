@@ -45,6 +45,11 @@ public class BotSelectorDisplay : MonoBehaviour
         ToggleBotSelector(BotType.Vacuum, currentMaterials >= BotController.VacuumBotCost);
         ToggleBotSelector(BotType.Breaker, currentMaterials >= BotController.BreakerBotCost);
         ToggleBotSelector(BotType.Tow, currentMaterials >= BotController.TowBotCost);
+
+        if (currentMaterials >= BotController.VacuumBotCost)
+        {
+            TutorialController.ShowTutorial("SpawningBots");
+        }
     }
 
     private void OnDestroy()
