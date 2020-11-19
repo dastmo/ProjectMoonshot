@@ -4999,6 +4999,7 @@ MonoBehaviour:
   gameOverHeading: {fileID: 4404410025184203710}
   gameOverParagraph: {fileID: 344791420086822825}
   cursorTexture: {fileID: 2800000, guid: 895bd7c18ec361b49b980ff6a4bd251e, type: 3}
+  menuCursor: {fileID: 2800000, guid: 693c219b0811e7442856035cdeb2f00d, type: 3}
 --- !u!114 &9033127000260951273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5022,6 +5023,8 @@ MonoBehaviour:
   titleText: {fileID: 7556585222611547451}
   paragraph: {fileID: 10790015991661998}
   tutorialImage: {fileID: 6500043332056785719}
+  crosshair: {fileID: 2800000, guid: 895bd7c18ec361b49b980ff6a4bd251e, type: 3}
+  cursorTexture: {fileID: 2800000, guid: 693c219b0811e7442856035cdeb2f00d, type: 3}
 --- !u!1 &7870228894439404363
 GameObject:
   m_ObjectHideFlags: 0

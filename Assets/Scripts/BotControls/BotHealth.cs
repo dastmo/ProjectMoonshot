@@ -18,6 +18,8 @@ public class BotHealth : MonoBehaviour
     public static Action<float, float> HealthChanged;
     public Action<BotHealth> TakenDamage;
 
+    private Animator animator;
+
     public float CurrentHealth
     {
         get
@@ -35,6 +37,7 @@ public class BotHealth : MonoBehaviour
     private void Awake()
     {
         playerControls = GetComponent<PlayerControls>();
+        animator = GetComponent<Animator>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -52,14 +55,11 @@ public class BotHealth : MonoBehaviour
 
     private void TakeDamage(Collision2D collision)
     {
-        if (collision.otherCollider != bodyCollider || !playerControls.IsEnabled) return;
+        if (collision.otherCollider != bodyCollider) return;
 
-        Debris debris = collision.gameObject.GetComponent<Debris>();
+        if (collision.collider.gameObject.layer == 9 || collision.collider.gameObject.layer == 18) return;
 
-        if (debris)
-        {
-            damage += collision.relativeVelocity.magnitude;
-        }
+        damage += collision.relativeVelocity.magnitude;
 
         HealthChanged?.Invoke(CurrentHealth, startingHealth);
         TakenDamage?.Invoke(this);
@@ -69,6 +69,8 @@ public class BotHealth : MonoBehaviour
             DestroyShip();
             return;
         }
+
+        animator.SetTrigger("FlashRed");
 
         StartCoroutine(DamageCooldown());
     }

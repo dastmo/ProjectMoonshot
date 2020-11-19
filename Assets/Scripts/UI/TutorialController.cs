@@ -14,6 +14,10 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private Text paragraph;
     [SerializeField] private Image tutorialImage;
 
+    [Header("Cursors")]
+    [SerializeField] private Texture2D crosshair;
+    [SerializeField] private Texture2D cursorTexture;
+
     private static TutorialController Instance;
 
     public static Action<string> TutorialClosed;
@@ -45,6 +49,8 @@ public class TutorialController : MonoBehaviour
             return;
         }
 
+        Cursor.SetCursor(Instance.cursorTexture, Vector2.zero, CursorMode.Auto);
+
         Instance.titleText.text = data.Title;
         Instance.tutorialImage.sprite = data.Image;
         Instance.tutorialImage.preserveAspect = true;
@@ -67,6 +73,8 @@ public class TutorialController : MonoBehaviour
         Time.timeScale = 1f;
 
         GameUIController.TutorialOpen = false;
+
+        Cursor.SetCursor(Instance.crosshair, Vector2.zero, CursorMode.Auto);
 
         TutorialClosed?.Invoke(CurrentTutorialKey);
     }

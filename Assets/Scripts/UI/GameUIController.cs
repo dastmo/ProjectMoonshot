@@ -21,6 +21,7 @@ public class GameUIController : MonoBehaviour
 
     [Header("Cursor")]
     [SerializeField] private Texture2D cursorTexture;
+    [SerializeField] private Texture2D menuCursor;
 
     private bool isPaused = false;
 
@@ -126,11 +127,13 @@ public class GameUIController : MonoBehaviour
         {
             Instance.pausePanel.SetActive(false);
             Time.timeScale = 1f;
+            Cursor.SetCursor(Instance.cursorTexture, Vector2.zero, CursorMode.Auto);
         }
         else
         {
             Instance.pausePanel.SetActive(true);
             Time.timeScale = 0f;
+            Cursor.SetCursor(Instance.menuCursor, Vector2.zero, CursorMode.Auto);
         }
 
         Instance.isPaused = !Instance.isPaused;

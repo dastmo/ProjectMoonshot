@@ -7,6 +7,9 @@ public class SettingsMenuController : MonoBehaviour
 {
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
+    [SerializeField] private GameObject tutorialsResetHolder;
+
+    [SerializeField] private List<TutorialData> tutorials;
 
     private void OnEnable()
     {
@@ -22,5 +25,15 @@ public class SettingsMenuController : MonoBehaviour
     public void SfxSliderChanged(float value)
     {
         AudioController.SFXVolume = (float)value / 100;
+    }
+
+    public void ResetTutorials()
+    {
+        foreach (var item in tutorials)
+        {
+            PlayerPrefs.DeleteKey("tutorial_" + item.Key);
+        }
+
+        tutorialsResetHolder.SetActive(true);
     }
 }
