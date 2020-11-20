@@ -41,7 +41,8 @@ public class GameController : MonoBehaviour
 
     private bool inititalDebrisSpawned = false;
     private bool timerStarted = false;
-    private bool gameStarted { get { return inititalDebrisSpawned && timerStarted; } }
+    private bool gameEnded = false;
+    private bool gameRunning { get { return inititalDebrisSpawned && timerStarted && !gameEnded; } }
 
     private bool movementTutorialShown = false;
 
@@ -126,6 +127,7 @@ public class GameController : MonoBehaviour
     private CinemachineVirtualCamera followCamera;
 
     public static Action<float> MaterialsAvailableChanged;
+    public static Action<int, float, float> GameEnded;
 
     private void Awake()
     {
@@ -145,21 +147,22 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (gameStarted && !movementTutorialShown)
+        if (gameRunning && !movementTutorialShown)
         {
             TutorialController.ShowTutorial("Movement");
             movementTutorialShown = true;
             
         }
 
-        if (TotalDebrisCount <= 0 && gameStarted)
+        if (TotalDebrisCount <= 0 && gameRunning)
         {
-            GameUIController.ShowGameOverPanel(false, 1f);
+            gameEnded = true;
+            GameEnded?.Invoke(gameTimeRemainingSeconds, TotalDebrisCollectedMass, TotalDebrisMass);
         }
-        else if (gameTimeRemainingSeconds <= 0f && gameStarted)
+        else if (gameTimeRemainingSeconds <= 0 && gameRunning)
         {
-            float percentage = totalDebrisCollectedMass / (totalDebrisCollectedMass + totalDebrisMass);
-            GameUIController.ShowGameOverPanel(true, percentage);
+            gameEnded = true;
+            GameEnded?.Invoke(0, TotalDebrisCollectedMass, TotalDebrisMass);
         }
     }
 
@@ -297,7 +300,7 @@ public class GameController : MonoBehaviour
     {
         timerStarted = true;
 
-        while (gameTimeRemainingSeconds >= 0)
+        while (gameTimeRemainingSeconds >= 0 && gameRunning)
         {
             GameUIController.UpdateTimerText(gameTimeRemainingSeconds);
             yield return new WaitForSeconds(1f);

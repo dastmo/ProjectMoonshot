@@ -17,7 +17,10 @@ public class GameUIController : MonoBehaviour
     [Header("Game Over")]
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private Text gameOverHeading;
-    [SerializeField] private Text gameOverParagraph;
+    [SerializeField] private Text gameOverLetterGrade;
+    [SerializeField] private Text gameOverTime;
+    [SerializeField] private Text gameOverDebris;
+    [SerializeField] private Text gameOverTotalScore;
 
     [Header("Cursor")]
     [SerializeField] private Texture2D cursorTexture;
@@ -31,11 +34,15 @@ public class GameUIController : MonoBehaviour
 
     public static bool GamePaused { get => Instance.isPaused; }
 
+    private ScoreController scoreController;
+
     private void Awake()
     {
         Instance = this;
 
         Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
+        scoreController = FindObjectOfType<ScoreController>();
+        scoreController.ScoreCalculated += ShowGameOverPanel;
     }
 
     private void Start()
@@ -104,21 +111,25 @@ public class GameUIController : MonoBehaviour
         }
     }
 
-    public static void ShowGameOverPanel(bool timerExpired, float debrisPercentage)
+    public static void ShowGameOverPanel()
     {
         Instance.gameOverPanel.SetActive(true);
-        
 
-        if (timerExpired)
-        {
-            Instance.gameOverHeading.text = "Time's Up!";
-            Instance.gameOverParagraph.text = string.Format("You collected {0}% of the space junk.", (debrisPercentage * 100).ToString("0.00"));
-        }
-        else
-        {
-            Instance.gameOverHeading.text = "Job Done!";
-            Instance.gameOverParagraph.text = "You collected all of the space junk! Incredible!";
-        }
+        string letterGrade = Instance.scoreController.FinalLetterGrade;
+        int score = Instance.scoreController.FinalScore;
+        int timeRemainingSeconds = Instance.scoreController.SecondsRemaining;
+        int timeRemainingScore = timeRemainingSeconds * 1000;
+        float debrisMassPercentage = Instance.scoreController.DebrisCollectedPercentage;
+        int debrisScore = Instance.scoreController.DebrisScore;
+
+        Instance.gameOverLetterGrade.text = letterGrade;
+        Instance.gameOverTotalScore.text = string.Format("Total Score: {0:n0}", score);
+
+        int minutesRemaining = timeRemainingSeconds / 60;
+        int secondsRemaining = timeRemainingSeconds % 60;
+        Instance.gameOverTime.text = string.Format("Time Remaining: {0:n0} ({1}:{2})", timeRemainingScore, minutesRemaining.ToString("D2"), secondsRemaining.ToString("D2"));
+
+        Instance.gameOverDebris.text = string.Format("Debris Collected: {0:n0} ({1}%)", debrisScore, (debrisMassPercentage * 100).ToString("0.00"));
     }
 
     public static void TogglePause()
@@ -142,5 +153,6 @@ public class GameUIController : MonoBehaviour
     private void OnDestroy()
     {
         BotHealth.HealthChanged -= UpdateHealthSlider;
+        scoreController.ScoreCalculated -= ShowGameOverPanel;
     }
 }
