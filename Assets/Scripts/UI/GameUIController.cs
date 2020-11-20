@@ -130,6 +130,17 @@ public class GameUIController : MonoBehaviour
         Instance.gameOverTime.text = string.Format("Time Remaining: {0:n0} ({1}:{2})", timeRemainingScore, minutesRemaining.ToString("D2"), secondsRemaining.ToString("D2"));
 
         Instance.gameOverDebris.text = string.Format("Debris Collected: {0:n0} ({1}%)", debrisScore, (debrisMassPercentage * 100).ToString("0.00"));
+
+        if (timeRemainingScore <= 0)
+        {
+            Instance.gameOverHeading.text = "Time's Up!";
+        }
+        else
+        {
+            Instance.gameOverHeading.text = "Job Done!";
+        }
+
+        Cursor.SetCursor(Instance.menuCursor, Vector2.zero, CursorMode.Auto);
     }
 
     public static void TogglePause()
