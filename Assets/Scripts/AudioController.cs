@@ -24,6 +24,7 @@ public class AudioController : MonoBehaviour
         set
         {
             PlayerPrefs.SetInt("MusicVolume", Mathf.RoundToInt(value * 100));
+            MusicVolumeChanged();
         }
     }
 
@@ -58,10 +59,19 @@ public class AudioController : MonoBehaviour
         musicSource.clip = backgroundMusic;
         musicSource.volume = MusicVolume * 0.25f;
 
-        if (MusicVolume > 0f)
+        if (MusicVolume > 0f && !musicSource.isPlaying)
         {
             musicSource.Play();
         }
+        else if (MusicVolume <= 0f)
+        {
+            musicSource.Stop();
+        }
+    }
+
+    public static void MusicVolumeChanged()
+    {
+        Instance.StartBackgroundMusic();
     }
 
     public static void PlayUIClick()
