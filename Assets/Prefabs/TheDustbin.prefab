@@ -356,6 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d80c8db0fd546b041b0c47b5046de3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitSound: {fileID: 8300000, guid: 65ef721c3bec5a143b7596d827ea8c6f, type: 3}
 --- !u!1 &3167907206596077262
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,6 +537,7 @@ MonoBehaviour:
   outsideSprite: {fileID: 0}
   insideTrigger: {fileID: 3167907206498557991}
   shipsTrigger: {fileID: 5313894615531931621}
+  hitSound: {fileID: 8300000, guid: 65ef721c3bec5a143b7596d827ea8c6f, type: 3}
 --- !u!1 &8434851067829307322
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,6 +29,7 @@ public class SettingsMenuController : MonoBehaviour
 
     public void ResetTutorials()
     {
+        AudioController.PlayUIClick();
         foreach (var item in tutorials)
         {
             PlayerPrefs.DeleteKey("tutorial_" + item.Key);

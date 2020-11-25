@@ -314,3 +314,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionCollider: {fileID: 8373868479983829296}
   explosionParticles: {fileID: 2157372200645759627, guid: e29e444a9ac84cf4880a8888ea1ca201, type: 3}
+  redBeep: {fileID: 8300000, guid: f610a0d48f8b2ac49a40cfd3c4e1bacf, type: 3}

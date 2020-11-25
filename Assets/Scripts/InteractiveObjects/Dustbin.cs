@@ -9,41 +9,9 @@ public class Dustbin : MonoBehaviour
     [SerializeField] private Collider2D insideTrigger;
     [SerializeField] private Collider2D shipsTrigger;
 
+    [SerializeField] private AudioClip hitSound;
+
     public static Action<float> DebrisCollected;
-
-    /* private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.bounds.Intersects(insideTrigger.bounds))
-        {
-            Debris debris = collision.GetComponent<Debris>();
-
-            if (debris)
-            {
-                DebrisCollected?.Invoke(debris.Size);
-                Destroy(collision.gameObject);
-                return;
-            }
-        }
-
-        PlayerControls player = collision.GetComponent<PlayerControls>();
-
-        if (player)
-        {
-            HideOutsideSprite();
-            player.EnterDustbin(gameObject.layer);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        PlayerControls player = collision.GetComponent<PlayerControls>();
-
-        if (player)
-        {
-            ShowOutsideSprite();
-            player.ExitDustbin();
-        }
-    } */
 
     public void HideOutsideSprite()
     {
@@ -57,5 +25,10 @@ public class Dustbin : MonoBehaviour
         if (outsideSprite == null) outsideSprite = GetComponent<SpriteRenderer>();
 
         outsideSprite.color = Color.white;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        AudioSource.PlayClipAtPoint(hitSound, transform.position, AudioController.SFXVolume);
     }
 }

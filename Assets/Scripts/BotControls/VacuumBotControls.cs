@@ -14,6 +14,9 @@ public class VacuumBotControls : PlayerControls
     [SerializeField] private ParticleSystem suckParticles;
     [SerializeField] private ParticleSystem blowParticles;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource vacuumAudioSource;
+
     private float currentBagMass;
     private List<float> individualDebrisWeight = new List<float>();
 
@@ -70,6 +73,24 @@ public class VacuumBotControls : PlayerControls
         ControlEffectorForce();
         ControlParticles();
         SpitOutDebris();
+    }
+
+    private void Update()
+    {
+        ControlVacuumSound();
+    }
+
+    private void ControlVacuumSound()
+    {
+        if ((isSucking || isBlowing) && !vacuumAudioSource.isPlaying)
+        {
+            vacuumAudioSource.volume = AudioController.SFXVolume * 0.5f;
+            vacuumAudioSource.Play();
+        }
+        else if ((!isSucking && !isBlowing) && vacuumAudioSource.isPlaying)
+        {
+            vacuumAudioSource.Stop();
+        }
     }
 
     private void ControlEffectorForce()

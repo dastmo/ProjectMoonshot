@@ -37,6 +37,8 @@ public class PlayerControls : MonoBehaviour
     private Camera mainCamera;
     private BotController botController;
 
+    private AudioSource audioSource;
+
     private void Awake()
     {
         trailRenderer = GetComponentInChildren<TrailRenderer>();
@@ -48,6 +50,8 @@ public class PlayerControls : MonoBehaviour
     protected virtual void Start()
     {
         botController.RegisterBot(this);
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = AudioController.SFXVolume;
     }
 
     protected virtual void FixedUpdate()
@@ -57,6 +61,26 @@ public class PlayerControls : MonoBehaviour
         LookAtMouse();
 
         rb.velocity = (rotationVector.normalized * currentThrottle) + (distanceVector.normalized * throttleForce);
+    }
+
+    private void Update()
+    {
+        ControlEngineAudio();
+    }
+
+    private void ControlEngineAudio()
+    {
+        bool isThrottling = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A);
+
+        if (isThrottling && !audioSource.isPlaying)
+        {
+            audioSource.volume = AudioController.SFXVolume * 0.5f;
+            audioSource.Play();
+        }
+        else if (!isThrottling && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
 
     private Vector2 RotateAroundEarth()

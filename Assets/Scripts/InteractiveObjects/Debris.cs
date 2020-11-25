@@ -15,6 +15,10 @@ public class Debris : MonoBehaviour
     [SerializeField] private float debugSize = 1f;
     [SerializeField] private Vector2 debugInitialVelocity = Vector2.zero;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip[] impactSounds;
+    [SerializeField] private AudioClip breakSound;
+
     public float maxSize { get; set; } = 50f;
     public float minSize { get; set; } = 10f;
 
@@ -92,7 +96,13 @@ public class Debris : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        float impactForce = collision.relativeVelocity.magnitude;
+        Debris otherDebris = collision.gameObject.GetComponent<Debris>();
+
+        if (otherDebris)
+        {
+            int soundIndex = Random.Range(0, impactSounds.Length);
+            AudioSource.PlayClipAtPoint(impactSounds[soundIndex], collision.contacts[0].point, AudioController.SFXVolume);
+        }
     }
 
     private void CreateFissures()
@@ -129,6 +139,8 @@ public class Debris : MonoBehaviour
     public void BreakDown()
     {
         if (size < 10f) return;
+
+        AudioSource.PlayClipAtPoint(breakSound, transform.position, AudioController.SFXVolume);
 
         int numberOfPieces = Random.Range(2, 8);
         for (int i = 0; i < numberOfPieces; i++)

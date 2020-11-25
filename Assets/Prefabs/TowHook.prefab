@@ -233,3 +233,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953e964f41f8de34f87889357dadffc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towHitSound: {fileID: 8300000, guid: b633fc2b02d387049b62f4d6ce7e0de8, type: 3}

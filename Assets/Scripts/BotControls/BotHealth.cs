@@ -10,6 +10,7 @@ public class BotHealth : MonoBehaviour
     [SerializeField] private Collider2D bodyCollider;
     [SerializeField] private GameObject destroyParticles;
     [SerializeField] private Vector3 destroyParticlesScale = new Vector3(1f, 1f, 1f);
+    [SerializeField] private AudioClip hitSound;
 
     private bool canTakeDamage = true;
 
@@ -58,6 +59,8 @@ public class BotHealth : MonoBehaviour
         if (collision.otherCollider != bodyCollider) return;
 
         if (collision.collider.gameObject.layer == 9 || collision.collider.gameObject.layer == 18) return;
+
+        AudioSource.PlayClipAtPoint(hitSound, transform.position, AudioController.SFXVolume);
 
         damage += collision.relativeVelocity.magnitude;
 

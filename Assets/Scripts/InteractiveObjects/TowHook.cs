@@ -18,6 +18,8 @@ public class TowHook : MonoBehaviour
     private float ropeSegmentLength = 0f;
     private int ropeSegmentCount = 50;
 
+    [SerializeField] private AudioClip towHitSound;
+
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -52,6 +54,7 @@ public class TowHook : MonoBehaviour
 
         if (debris || playerBot || dustbin)
         {
+            AudioSource.PlayClipAtPoint(towHitSound, transform.position, AudioController.SFXVolume);
             HandleContact(collision.gameObject, collision.contacts[0].point);
             return;
         }

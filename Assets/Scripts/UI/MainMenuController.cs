@@ -29,17 +29,20 @@ public class MainMenuController : MonoBehaviour
 
     public void LoadGameScene()
     {
+        AudioController.PlayUIClick();
         SceneLoadingController.SceneIndexToLoad = 2;
         SceneManager.LoadScene(1);
     }
 
     public void ExitGame()
     {
+        AudioController.PlayUIClick();
         Application.Quit();
     }
 
     public void ToggleSettings(bool isOn)
     {
+        AudioController.PlayUIClick();
         if (isOn)
         {
             MainMenuHolder.SetActive(false);

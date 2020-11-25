@@ -47,6 +47,8 @@ public class TowBotControls : BreakerBotControls
 
         if (GameUIController.TutorialOpen || GameUIController.GamePaused) return;
 
+        AudioSource.PlayClipAtPoint(shootSound, transform.position, AudioController.SFXVolume);
+
         loadedProjectile.transform.SetParent(null);
         Rigidbody2D projectileRb = loadedProjectile.GetComponent<Rigidbody2D>();
         projectileRb.isKinematic = false;

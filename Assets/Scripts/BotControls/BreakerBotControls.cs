@@ -7,6 +7,7 @@ public class BreakerBotControls : PlayerControls
     [SerializeField] protected Transform turretPoint;
     [SerializeField] protected float reloadTime = 3f;
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] protected AudioClip shootSound;
 
     protected float cooldownTimer = 0f;
     protected bool onCooldown = false;
@@ -46,6 +47,8 @@ public class BreakerBotControls : PlayerControls
         if (onCooldown) return;
 
         if (GameUIController.TutorialOpen || GameUIController.GamePaused) return;
+
+        AudioSource.PlayClipAtPoint(shootSound, transform.position, AudioController.SFXVolume);
 
         loadedProjectile.transform.SetParent(null);
         Rigidbody2D projectileRb = loadedProjectile.GetComponent<Rigidbody2D>();

@@ -211,6 +211,12 @@ MonoBehaviour:
   isDebug: 0
   debugSize: 1
   debugInitialVelocity: {x: 0, y: 0}
+  impactSounds:
+  - {fileID: 8300000, guid: f6d01cb2f6e294948b211139c750cc48, type: 3}
+  - {fileID: 8300000, guid: d85b7de8d09faed45830aec26d03f3d6, type: 3}
+  - {fileID: 8300000, guid: c3acc6d477bbc1f4a966cd4efc287381, type: 3}
+  - {fileID: 8300000, guid: a8bebf3dd58e3b4428e55c6164ee74e6, type: 3}
+  breakSound: {fileID: 8300000, guid: e10114f8317cb0c4bb692120b1d2f9ea, type: 3}
 --- !u!331 &4602583462889448181
 SpriteMask:
   m_ObjectHideFlags: 0

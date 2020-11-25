@@ -6,6 +6,7 @@ public class BreakerMissile : MonoBehaviour
 {
     [SerializeField] private Collider2D explosionCollider;
     [SerializeField] private GameObject explosionParticles;
+    [SerializeField] private AudioClip redBeep;
 
     private Coroutine flashCoroutine;
 
@@ -47,8 +48,6 @@ public class BreakerMissile : MonoBehaviour
 
     private void Explode()
     {
-        // TODO: Add explosion effect.
-
         HashSet<Debris> contactDebris = new HashSet<Debris>();
         List<Collider2D> overlappingColliders = new List<Collider2D>();
         ContactFilter2D contactFilter = new ContactFilter2D();
@@ -89,6 +88,7 @@ public class BreakerMissile : MonoBehaviour
             {
                 spriteRenderer.color = originalColor;
                 isRed = false;
+                AudioSource.PlayClipAtPoint(redBeep, transform.position, AudioController.SFXVolume);
             }
             else
             {
